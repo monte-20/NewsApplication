@@ -1,36 +1,24 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Windows.Forms
 
-Public Class ClsUser
+Public Class clsFile
     Inherits clsBussiness
 
 
-    Private UsernameProp As String
-    Public Property Username() As String
+
+    Private BodyProp As String
+    Public Property Body() As String
         Get
-            Return UsernameProp
+            Return BodyProp
         End Get
-        Set(ByVal value As String)
-            UsernameProp = value
+        Set(value As String)
+            BodyProp = value
         End Set
     End Property
 
-    Private PasswordProp As String
-    Public Property Password() As String
-        Get
-            Return PasswordProp
-        End Get
-        Set(ByVal value As String)
-            PasswordProp = value
-        End Set
-    End Property
-
-    Sub New()
-        ClassID = BussinessClasses.USER
-    End Sub
     Public Overrides Sub Update()
         MyBase.Update()
-        Dim query As String = "select * from T_USER where id=@ID"
+        Dim query As String = "select * from T_FILE where id=@ID"
         Using con As New SqlConnection("Initial Catalog=FileWorx;" &
         "Data Source=localhost;Integrated Security=SSPI;")
             Using com As New SqlCommand()
@@ -56,8 +44,8 @@ Public Class ClsUser
         End Using
     End Sub
     Private Sub UpdateQuery()
-        Dim query As String = "Update T_USER "
-        query &= "set ID=@ID,C_USERNAME=@C_USERNAME,C_PASSWORD=@C_PASSWORD "
+        Dim query As String = "Update T_FILE "
+        query &= "set ID=@ID,C_Body=@C_Body "
         query &= "where ID=@ID"
 
         Using con As New SqlConnection("Initial Catalog=FileWorx;" &
@@ -68,8 +56,7 @@ Public Class ClsUser
                     .CommandType = CommandType.Text
                     .CommandText = query
                     .Parameters.AddWithValue("@ID", ID)
-                    .Parameters.AddWithValue("@C_USERNAME", Username)
-                    .Parameters.AddWithValue("@C_PASSWORD", Password)
+                    .Parameters.AddWithValue("@C_Body", Body)
                 End With
                 Try
                     con.Open()
@@ -81,8 +68,9 @@ Public Class ClsUser
         End Using
     End Sub
     Private Sub InsertQuery()
-        Dim query As String = "insert into T_USER "
-        query &= "VALUES (@ID,@USERNAME,@PASSWORD)"
+        Dim query As String = "insert into T_File "
+        query &= "VALUES (@ID,@C_Body)"
+
         Using con As New SqlConnection("Initial Catalog=FileWorx;" &
         "Data Source=localhost;Integrated Security=SSPI;")
             Using com As New SqlCommand()
@@ -91,8 +79,7 @@ Public Class ClsUser
                     .CommandType = CommandType.Text
                     .CommandText = query
                     .Parameters.AddWithValue("@ID", ID)
-                    .Parameters.AddWithValue("@C_USERNAME", Username)
-                    .Parameters.AddWithValue("@C_PASSWORD", Password)
+                    .Parameters.AddWithValue("@C_Body", Body)
                 End With
                 Try
                     con.Open()
@@ -103,10 +90,9 @@ Public Class ClsUser
             End Using
         End Using
     End Sub
-
     Public Overrides Sub Read()
         MyBase.Read()
-        Dim query As String = "Select C_USERNAME,C_PASSWORD From T_USER where ID= @ID"
+        Dim query As String = "Select C_BODY From T_FILE where ID= @ID"
         Using con As New SqlConnection("Initial Catalog=FileWorx;" &
         "Data Source=localhost;Integrated Security=SSPI;")
             Using com As New SqlCommand()
@@ -119,11 +105,11 @@ Public Class ClsUser
                 con.Open()
                 Using reader As SqlDataReader = com.ExecuteReader
                     Do While reader.Read()
-                        Username = reader.GetString(0)
-                        Password = reader.GetString(1)
+                        Body = reader.GetString(0)
                     Loop
                 End Using
             End Using
         End Using
     End Sub
+
 End Class

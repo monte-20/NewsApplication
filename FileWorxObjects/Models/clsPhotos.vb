@@ -1,11 +1,12 @@
-﻿Imports System.IO
+﻿Imports System.Data.SqlClient
+Imports System.IO
 Imports System.Windows.Forms
 
 Public Class ClsPhotos
-    Inherits clsNewsBase
+    Inherits clsFile
 
     Sub New()
-
+        ClassID = BussinessClasses.PHOTOS
     End Sub
 
     Private PhotoProp As String
@@ -28,68 +29,100 @@ Public Class ClsPhotos
         Return Photo
     End Function
 
-    Public Sub Update()
-        Dim DataPath As String = clsShared.PhotosPath & ID.ToString & ".txt"
-        copyPhoto()
-        Dim Data As String = ConvertToString(Me)
-        File.WriteAllText(DataPath, Data)
+    Public Overrides Sub Update()
+        MyBase.Update()
+        Dim query As String = "select * from T_PHOTO where id=@ID"
+        Using con As New SqlConnection("Initial Catalog=FileWorx;" &
+        "Data Source=localhost;Integrated Security=SSPI;")
+            Using com As New SqlCommand()
+                With com
+                    .Connection = con
+                    .CommandType = CommandType.Text
+                    .CommandText = query
+                    .Parameters.AddWithValue("@ID", ID)
+                End With
+                Try
+                    con.Open()
+                    Using reader As SqlDataReader = com.ExecuteReader
+                        If reader.Read Then
+                            UpdateQuery()
+                        Else
+                            InsertQuery()
+                        End If
+                    End Using
+                Catch ex As SqlException
+                    MessageBox.Show(ex.Message.ToString(), "Error Message")
+                End Try
+            End Using
+        End Using
+    End Sub
+    Private Sub UpdateQuery()
+        Dim query As String = "Update T_PHOTO "
+        query &= "set ID=@ID,C_LOCATION=@C_LOCATION "
+        query &= "where ID=@ID"
+
+        Using con As New SqlConnection("Initial Catalog=FileWorx;" &
+        "Data Source=localhost;Integrated Security=SSPI;")
+            Using com As New SqlCommand()
+                With com
+                    .Connection = con
+                    .CommandType = CommandType.Text
+                    .CommandText = query
+                    .Parameters.AddWithValue("@ID", ID)
+                    .Parameters.AddWithValue("@C_LOCATION", Photo)
+                End With
+                Try
+                    con.Open()
+                    com.ExecuteNonQuery()
+                Catch ex As SqlException
+                    MessageBox.Show(ex.Message.ToString(), "Error Message")
+                End Try
+            End Using
+        End Using
+    End Sub
+    Private Sub InsertQuery()
+        Dim query As String = "insert into T_PHOTO "
+        query &= "VALUES (@ID,@C_LOCATION)"
+        Using con As New SqlConnection("Initial Catalog=FileWorx;" &
+        "Data Source=localhost;Integrated Security=SSPI;")
+            Using com As New SqlCommand()
+                With com
+                    .Connection = con
+                    .CommandType = CommandType.Text
+                    .CommandText = query
+                    .Parameters.AddWithValue("@ID", ID)
+                    .Parameters.AddWithValue("@C_LOCATION", Photo)
+                End With
+                Try
+                    con.Open()
+                    com.ExecuteNonQuery()
+                Catch ex As SqlException
+                    MessageBox.Show(ex.Message.ToString(), "Error Message")
+                End Try
+            End Using
+        End Using
     End Sub
 
-    Private Sub copyPhoto()
-        Dim photoPath As String = clsShared.PhotosPath & ID.ToString & "." & Photo.Split(".").Last
-        File.Copy(Photo, photoPath, True)
-        Photo = photoPath
+
+    Public Overrides Sub Read()
+        MyBase.Read()
+        Dim query As String = "Select C_LOCATION From T_PHOTO where ID= @ID"
+        Using con As New SqlConnection("Initial Catalog=FileWorx;" &
+        "Data Source=localhost;Integrated Security=SSPI;")
+            Using com As New SqlCommand()
+                With com
+                    .Connection = con
+                    .CommandType = CommandType.Text
+                    .CommandText = query
+                    .Parameters.AddWithValue("@ID", ID)
+                End With
+                con.Open()
+                Using reader As SqlDataReader = com.ExecuteReader
+                    Do While reader.Read()
+                        Photo = reader.GetString(0)
+                    Loop
+                End Using
+            End Using
+        End Using
     End Sub
-
-    Public Sub Read(id As Guid)
-        Dim dataPath As String = clsShared.PhotosPath & id.ToString & ".txt"
-        Dim data As String
-        data = File.ReadAllText(dataPath)
-        Parse(data)
-    End Sub
-
-    Public Shared Sub Delete(id As Guid)
-        Dim dir As New DirectoryInfo(clsShared.PhotosPath)
-        Dim files() As FileInfo = dir.GetFiles(id.ToString & ".*")
-        For Each fi In files
-            File.Delete(fi.FullName)
-        Next
-    End Sub
-
-    Public Shared Function ReadAll() As List(Of ClsPhotos)
-        Dim data As New List(Of ClsPhotos)
-        Dim id As Guid
-        Dim dir As New DirectoryInfo(clsShared.PhotosPath)
-        Dim files() As FileInfo = dir.GetFiles("*.txt")
-        Dim fi As FileInfo
-        For Each fi In files
-            Dim obj As New ClsPhotos
-            Guid.TryParse(fi.Name.Split(".")(0), id)
-            obj.Read(id)
-            data.Add(obj)
-        Next
-        Return data
-    End Function
-
-    Public Shared Function ConvertToString(PhotoObj As ClsPhotos)
-        Dim seperator As String = clsShared.Seperator
-        Dim data As String = PhotoObj.ID.ToString & seperator &
-                        PhotoObj.CreationTime & seperator &
-                         PhotoObj.Title & seperator &
-                         PhotoObj.Description & seperator &
-                         PhotoObj.Body & seperator &
-                         PhotoObj.Photo
-        Return data
-    End Function
-
-    Public Sub Parse(file As String)
-        Dim data() As String = file.Split(New String() {clsShared.Seperator}, StringSplitOptions.None)
-        Guid.TryParse(data(0), ID)
-        Date.TryParse(data(1), CreationTime)
-        Title = data(2)
-        Description = data(3)
-        Body = data(4)
-        Photo = data(5)
-    End Sub
-
 End Class

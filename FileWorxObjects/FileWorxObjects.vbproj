@@ -65,13 +65,18 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\clsBase.vb" />
+    <Compile Include="Models\clsBussiness.vb" />
+    <Compile Include="Models\clsBussinessQuery.vb" />
+    <Compile Include="Models\clsFileQuery.vb" />
     <Compile Include="Models\clsMainWindow.vb" />
     <Compile Include="Models\clsNews.vb" />
-    <Compile Include="Models\clsNewsBase.vb" />
+    <Compile Include="Models\clsFile.vb" />
+    <Compile Include="Models\clsNewsQuery.vb" />
     <Compile Include="Models\clsPhotos.vb" />
+    <Compile Include="Models\clsPhotosQuery.vb" />
     <Compile Include="Models\clsShared.vb" />
     <Compile Include="Models\clsUser.vb" />
+    <Compile Include="Models\clsUserQuery.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

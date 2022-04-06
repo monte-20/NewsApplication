@@ -10,7 +10,7 @@ Public Class frmPhotos
     Public Sub New(obj As ClsPhotos)
         InitializeComponent()
         photos = obj
-        TitleTextBox.Text = photos.Title
+        TitleTextBox.Text = photos.NAME
         DescriptionTextBox.Text = photos.Description
         PathTextBox.Text = photos.Photo
         showphoto(photos.Photo)
@@ -54,7 +54,7 @@ Public Class frmPhotos
     End Function
 
     Private Sub SaveFormData()
-        photos.Title = TitleTextBox.Text
+        photos.NAME = TitleTextBox.Text
         photos.Description = DescriptionTextBox.Text
         photos.Body = BodyTextBox.Text
         photos.Photo = PathTextBox.Text

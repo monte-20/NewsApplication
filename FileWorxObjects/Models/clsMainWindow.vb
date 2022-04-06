@@ -16,14 +16,14 @@ Public Class clsMainWindow
     End Sub
 
     Public Sub getFilesData()
-        newsData = ClsNews.ReadAll()
-        photosData = ClsPhotos.ReadAll()
+        newsData = clsNewsQuery.run
+        photosData = clsPhotosQuery.run
     End Sub
 
 
     Private Sub addNewsToList()
         For Each item In newsData
-            Dim record As New ListViewItem(item.Title)
+            Dim record As New ListViewItem(item.NAME)
             record.SubItems.Add(item.CreationTime)
             record.SubItems.Add(item.Description)
             record.SubItems.Add(item.ID.ToString)
@@ -36,7 +36,7 @@ Public Class clsMainWindow
 
     Private Sub addPhotosToList()
         For Each item In photosData
-            Dim record As New ListViewItem(item.Title)
+            Dim record As New ListViewItem(item.NAME)
             record.SubItems.Add(item.CreationTime)
             record.SubItems.Add(item.Description)
             record.SubItems.Add(item.ID.ToString)
@@ -57,12 +57,11 @@ Public Class clsMainWindow
     End Function
 
     Public Sub deleteItem(item As ListViewItem)
-        Dim id As Guid
-        Guid.TryParse(item.SubItems(3).Text, id)
+
         If photoslist.Contains(item) Then
-            ClsPhotos.Delete(id)
+            itemToPhoto(item).Delete()
         Else
-            ClsNews.Delete(id)
+            itemToNews(item).Delete()
         End If
 
     End Sub
@@ -82,7 +81,7 @@ Public Class clsMainWindow
 
     Public Function itemToNews(item As ListViewItem) As ClsNews
         Dim obj As New ClsNews
-        obj.Title = item.SubItems(0).Text
+        obj.NAME = item.SubItems(0).Text
         Date.TryParse(item.SubItems(1).Text, obj.CreationTime)
         obj.Description = item.SubItems(2).Text
         Guid.TryParse(item.SubItems(3).Text, obj.ID)
@@ -94,7 +93,7 @@ Public Class clsMainWindow
 
     Public Function itemToPhoto(item As ListViewItem) As ClsPhotos
         Dim obj As New ClsPhotos
-        obj.Title = item.SubItems(0).Text
+        obj.NAME = item.SubItems(0).Text
         Date.TryParse(item.SubItems(1).Text, obj.CreationTime)
         obj.Description = item.SubItems(2).Text
         Guid.TryParse(item.SubItems(3).Text, obj.ID)

@@ -17,7 +17,7 @@ Public Class frmNews
         Dim categoryData As List(Of ClsNews.Categories) = [Enum].GetValues(GetType(ClsNews.Categories)).Cast(Of ClsNews.Categories)().ToList()
         CategoryCombo.DataSource = categoryData
         Me.news = news
-        TitleTextBox.Text = news.Title
+        TitleTextBox.Text = news.NAME
         DescriptionTextBox.Text = news.Description
         Dim cat = DirectCast([Enum].Parse(GetType(ClsNews.Categories), news.Category), ClsNews.Categories)
         CategoryCombo.SelectedIndex = categoryData.IndexOf(cat)
@@ -41,7 +41,7 @@ Public Class frmNews
     End Sub
 
     Private Sub SaveFormData()
-        news.Title = TitleTextBox.Text
+        news.NAME = TitleTextBox.Text
         news.Description = DescriptionTextBox.Text
         Dim cat = DirectCast([Enum].Parse(GetType(ClsNews.Categories), CategoryCombo.Text), ClsNews.Categories)
         news.Category = cat
