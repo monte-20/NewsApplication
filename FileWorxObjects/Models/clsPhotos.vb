@@ -29,6 +29,13 @@ Public Class ClsPhotos
         Return Photo
     End Function
 
+    Private Sub CopyPhoto()
+        Dim path As String = Application.StartupPath & "\Data\Photos\" & ID.ToString
+        path &= Photo.Substring(Photo.LastIndexOf("."))
+        FileIO.FileSystem.CopyFile(Photo, path, True)
+        Photo = path
+    End Sub
+
     Public Overrides Sub Update()
         MyBase.Update()
         Dim query As String = "select * from T_PHOTO where id=@ID"
@@ -44,10 +51,11 @@ Public Class ClsPhotos
                 Try
                     con.Open()
                     Using reader As SqlDataReader = com.ExecuteReader
+                        CopyPhoto()
                         If reader.Read Then
-                            UpdateQuery()
+                            UpdateData()
                         Else
-                            InsertQuery()
+                            InsertData()
                         End If
                     End Using
                 Catch ex As SqlException
@@ -56,7 +64,7 @@ Public Class ClsPhotos
             End Using
         End Using
     End Sub
-    Private Sub UpdateQuery()
+    Private Sub UpdateData()
         Dim query As String = "Update T_PHOTO "
         query &= "set ID=@ID,C_LOCATION=@C_LOCATION "
         query &= "where ID=@ID"
@@ -80,7 +88,7 @@ Public Class ClsPhotos
             End Using
         End Using
     End Sub
-    Private Sub InsertQuery()
+    Private Sub InsertData()
         Dim query As String = "insert into T_PHOTO "
         query &= "VALUES (@ID,@C_LOCATION)"
         Using con As New SqlConnection("Initial Catalog=FileWorx;" &

@@ -40,6 +40,7 @@ Public Class frmMainWindow
     Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DisplayCategory()
         mainWindow = New clsMainWindow
+        ShowItems()
     End Sub
 
     Private Sub ShowToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowToolStripMenuItem.Click
@@ -112,6 +113,11 @@ Public Class frmMainWindow
             Dim item As ListViewItem = ItemList.FocusedItem
             ItemList.Items.Remove(item)
             mainWindow.deleteItem(item)
+            DisplayCategory()
+            TitleTextBox.Clear()
+            BodyTextBox.Clear()
+            CreationDateTextBox.Clear()
+            CategoryTextBox.Clear()
             e.Handled = True
         End If
     End Sub

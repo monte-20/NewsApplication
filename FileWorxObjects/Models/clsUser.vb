@@ -44,9 +44,9 @@ Public Class ClsUser
                     con.Open()
                     Using reader As SqlDataReader = com.ExecuteReader
                         If reader.Read Then
-                            UpdateQuery()
+                            UpdateData()
                         Else
-                            InsertQuery()
+                            InsertData()
                         End If
                     End Using
                 Catch ex As SqlException
@@ -55,7 +55,7 @@ Public Class ClsUser
             End Using
         End Using
     End Sub
-    Private Sub UpdateQuery()
+    Private Sub UpdateData()
         Dim query As String = "Update T_USER "
         query &= "set ID=@ID,C_USERNAME=@C_USERNAME,C_PASSWORD=@C_PASSWORD "
         query &= "where ID=@ID"
@@ -80,7 +80,7 @@ Public Class ClsUser
             End Using
         End Using
     End Sub
-    Private Sub InsertQuery()
+    Private Sub InsertData()
         Dim query As String = "insert into T_USER "
         query &= "VALUES (@ID,@USERNAME,@PASSWORD)"
         Using con As New SqlConnection("Initial Catalog=FileWorx;" &

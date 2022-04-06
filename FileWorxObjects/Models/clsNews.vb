@@ -40,9 +40,9 @@ Public Class ClsNews
                     con.Open()
                     Using reader As SqlDataReader = com.ExecuteReader
                         If reader.Read Then
-                            UpdateQuery()
+                            UpdateData()
                         Else
-                            InsertQuery()
+                            InsertData()
                         End If
                     End Using
                 Catch ex As SqlException
@@ -51,7 +51,7 @@ Public Class ClsNews
             End Using
         End Using
     End Sub
-    Private Sub UpdateQuery()
+    Private Sub UpdateData()
         Dim query As String = "Update T_NEWS "
         query &= "set ID=@ID,C_Category=@C_Category "
         query &= "where ID=@ID"
@@ -75,7 +75,7 @@ Public Class ClsNews
             End Using
         End Using
     End Sub
-    Private Sub InsertQuery()
+    Private Sub InsertData()
         Dim query As String = "insert into T_NEWS "
         query &= "VALUES (@ID,@C_Category)"
         Using con As New SqlConnection("Initial Catalog=FileWorx;" &

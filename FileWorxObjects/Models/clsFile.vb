@@ -32,9 +32,9 @@ Public Class clsFile
                     con.Open()
                     Using reader As SqlDataReader = com.ExecuteReader
                         If reader.Read Then
-                            UpdateQuery()
+                            UpdateData()
                         Else
-                            InsertQuery()
+                            InsertData()
                         End If
                     End Using
                 Catch ex As SqlException
@@ -43,7 +43,7 @@ Public Class clsFile
             End Using
         End Using
     End Sub
-    Private Sub UpdateQuery()
+    Private Sub UpdateData()
         Dim query As String = "Update T_FILE "
         query &= "set ID=@ID,C_Body=@C_Body "
         query &= "where ID=@ID"
@@ -67,7 +67,7 @@ Public Class clsFile
             End Using
         End Using
     End Sub
-    Private Sub InsertQuery()
+    Private Sub InsertData()
         Dim query As String = "insert into T_File "
         query &= "VALUES (@ID,@C_Body)"
 

@@ -78,9 +78,9 @@ Public Class clsBussiness
                     con.Open()
                     Using reader As SqlDataReader = com.ExecuteReader
                         If reader.Read Then
-                            UpdateQuery()
+                            UpdateData()
                         Else
-                            InsertQuery()
+                            InsertData()
                         End If
                     End Using
                 Catch ex As SqlException
@@ -89,7 +89,7 @@ Public Class clsBussiness
             End Using
         End Using
     End Sub
-    Private Sub UpdateQuery()
+    Private Sub UpdateData()
         Dim query As String = "Update T_BUSSINESSOBJECT "
         query &= "set ID=@ID,C_DESCRIPTION=@C_DESCRIPTION,"
         query &= "C_CREATIONDATE= @C_CREATIONDATE,C_NAME= @C_NAME,C_ClASSID=@C_ClASSID "
@@ -118,7 +118,7 @@ Public Class clsBussiness
             End Using
         End Using
     End Sub
-    Private Sub InsertQuery()
+    Private Sub InsertData()
         Dim query As String = "insert into T_BUSSINESSOBJECT "
         query &= "VALUES (@ID,@C_DESCRIPTION, @C_CREATIONDATE, @C_NAME,@C_ClASSID)"
 
