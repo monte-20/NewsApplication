@@ -1,5 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports System.IO
 Imports System.Windows.Forms
 
 Public Class ClsPhotos
@@ -9,15 +8,9 @@ Public Class ClsPhotos
         ClassID = BussinessClasses.PHOTOS
     End Sub
 
-    Private PhotoProp As String
+
     Public Property Photo() As String
-        Get
-            Return PhotoProp
-        End Get
-        Set(value As String)
-            PhotoProp = value
-        End Set
-    End Property
+
 
     Public Function BrowsePhoto() As String
         Dim result As DialogResult
@@ -32,105 +25,70 @@ Public Class ClsPhotos
     Private Sub CopyPhoto()
         Dim path As String = Application.StartupPath & "\Data\Photos\" & ID.ToString
         path &= Photo.Substring(Photo.LastIndexOf("."))
-        FileIO.FileSystem.CopyFile(Photo, path, True)
-        Photo = path
+        If Not path.Equals(Photo) Then
+            FileIO.FileSystem.CopyFile(Photo, path, True)
+            Photo = path
+        End If
     End Sub
 
     Public Overrides Sub Update()
         MyBase.Update()
-        Dim query As String = "select * from T_PHOTO where id=@ID"
-        Using con As New SqlConnection("Initial Catalog=FileWorx;" &
-        "Data Source=localhost;Integrated Security=SSPI;")
-            Using com As New SqlCommand()
-                With com
-                    .Connection = con
-                    .CommandType = CommandType.Text
-                    .CommandText = query
-                    .Parameters.AddWithValue("@ID", ID)
-                End With
-                Try
-                    con.Open()
-                    Using reader As SqlDataReader = com.ExecuteReader
-                        CopyPhoto()
-                        If reader.Read Then
-                            UpdateData()
-                        Else
-                            InsertData()
-                        End If
-                    End Using
-                Catch ex As SqlException
-                    MessageBox.Show(ex.Message.ToString(), "Error Message")
-                End Try
-            End Using
-        End Using
+        CopyPhoto()
+        If CanInsert Then
+            InsertData()
+            CanInsert = False
+        Else
+            UpdateData()
+        End If
     End Sub
     Private Sub UpdateData()
         Dim query As String = "Update T_PHOTO "
-        query &= "set ID=@ID,C_LOCATION=@C_LOCATION "
+        query &= "set C_LOCATION=@C_LOCATION "
         query &= "where ID=@ID"
 
-        Using con As New SqlConnection("Initial Catalog=FileWorx;" &
-        "Data Source=localhost;Integrated Security=SSPI;")
-            Using com As New SqlCommand()
+        Using com As New SqlCommand()
                 With com
-                    .Connection = con
-                    .CommandType = CommandType.Text
+
+                .CommandType = CommandType.Text
                     .CommandText = query
                     .Parameters.AddWithValue("@ID", ID)
                     .Parameters.AddWithValue("@C_LOCATION", Photo)
                 End With
-                Try
-                    con.Open()
-                    com.ExecuteNonQuery()
-                Catch ex As SqlException
-                    MessageBox.Show(ex.Message.ToString(), "Error Message")
-                End Try
-            End Using
+            clsDBConnectionManager.ExecuteNonQuery(com)
         End Using
+
     End Sub
     Private Sub InsertData()
         Dim query As String = "insert into T_PHOTO "
         query &= "VALUES (@ID,@C_LOCATION)"
-        Using con As New SqlConnection("Initial Catalog=FileWorx;" &
-        "Data Source=localhost;Integrated Security=SSPI;")
-            Using com As New SqlCommand()
+
+        Using com As New SqlCommand()
                 With com
-                    .Connection = con
-                    .CommandType = CommandType.Text
+
+                .CommandType = CommandType.Text
                     .CommandText = query
                     .Parameters.AddWithValue("@ID", ID)
                     .Parameters.AddWithValue("@C_LOCATION", Photo)
                 End With
-                Try
-                    con.Open()
-                    com.ExecuteNonQuery()
-                Catch ex As SqlException
-                    MessageBox.Show(ex.Message.ToString(), "Error Message")
-                End Try
-            End Using
+            clsDBConnectionManager.ExecuteNonQuery(com)
         End Using
+
     End Sub
 
 
     Public Overrides Sub Read()
         MyBase.Read()
         Dim query As String = "Select C_LOCATION From T_PHOTO where ID= @ID"
-        Using con As New SqlConnection("Initial Catalog=FileWorx;" &
-        "Data Source=localhost;Integrated Security=SSPI;")
-            Using com As New SqlCommand()
+        Dim data(1, 1) As String
+        Using com As New SqlCommand()
                 With com
-                    .Connection = con
-                    .CommandType = CommandType.Text
+
+                .CommandType = CommandType.Text
                     .CommandText = query
                     .Parameters.AddWithValue("@ID", ID)
                 End With
-                con.Open()
-                Using reader As SqlDataReader = com.ExecuteReader
-                    Do While reader.Read()
-                        Photo = reader.GetString(0)
-                    Loop
-                End Using
-            End Using
+            clsDBConnectionManager.ReadData(com, data)
         End Using
+        Photo = data(0, 0)
     End Sub
 End Class

@@ -24,7 +24,7 @@ Public Class clsMainWindow
     Private Sub addNewsToList()
         For Each item In newsData
             Dim record As New ListViewItem(item.NAME)
-            record.SubItems.Add(item.CreationTime)
+            record.SubItems.Add(item.CreationDate)
             record.SubItems.Add(item.Description)
             record.SubItems.Add(item.ID.ToString)
             record.SubItems.Add(item.Category.ToString)
@@ -37,7 +37,7 @@ Public Class clsMainWindow
     Private Sub addPhotosToList()
         For Each item In photosData
             Dim record As New ListViewItem(item.NAME)
-            record.SubItems.Add(item.CreationTime)
+            record.SubItems.Add(item.CreationDate)
             record.SubItems.Add(item.Description)
             record.SubItems.Add(item.ID.ToString)
             record.SubItems.Add(item.Photo)
@@ -82,7 +82,7 @@ Public Class clsMainWindow
     Public Function itemToNews(item As ListViewItem) As ClsNews
         Dim obj As New ClsNews
         obj.NAME = item.SubItems(0).Text
-        Date.TryParse(item.SubItems(1).Text, obj.CreationTime)
+        Date.TryParse(item.SubItems(1).Text, obj.CreationDate)
         obj.Description = item.SubItems(2).Text
         Guid.TryParse(item.SubItems(3).Text, obj.ID)
         Dim cat = DirectCast([Enum].Parse(GetType(ClsNews.Categories), item.SubItems(4).Text), ClsNews.Categories)
@@ -94,7 +94,7 @@ Public Class clsMainWindow
     Public Function itemToPhoto(item As ListViewItem) As ClsPhotos
         Dim obj As New ClsPhotos
         obj.NAME = item.SubItems(0).Text
-        Date.TryParse(item.SubItems(1).Text, obj.CreationTime)
+        Date.TryParse(item.SubItems(1).Text, obj.CreationDate)
         obj.Description = item.SubItems(2).Text
         Guid.TryParse(item.SubItems(3).Text, obj.ID)
         obj.Photo = item.SubItems(4).Text

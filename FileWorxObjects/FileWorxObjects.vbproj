@@ -65,6 +65,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\clsDBConnectionManager.vb" />
     <Compile Include="Models\clsBussiness.vb" />
     <Compile Include="Models\clsBussinessQuery.vb" />
     <Compile Include="Models\clsFileQuery.vb" />

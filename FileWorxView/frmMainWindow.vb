@@ -69,7 +69,6 @@ Public Class frmMainWindow
     End Sub
 
     Private Sub CheckLayout(item As ListViewItem)
-
         If mainWindow.itemIsPhoto(item) Then
             DisplayImage()
             Try
