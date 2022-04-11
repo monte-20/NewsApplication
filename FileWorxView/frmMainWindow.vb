@@ -50,7 +50,7 @@ Public Class frmMainWindow
 
     Private Sub ShowItems()
         ItemList.Items.Clear()
-        items = mainWindow.getItems
+        items = mainWindow.GetItems
 
         For Each item As ListViewItem In items
             ItemList.Items.Add(item)
@@ -69,7 +69,7 @@ Public Class frmMainWindow
     End Sub
 
     Private Sub CheckLayout(item As ListViewItem)
-        If mainWindow.itemIsPhoto(item) Then
+        If mainWindow.ItemIsPhoto(item) Then
             DisplayImage()
             Try
                 Dim imageFileStream As New IO.FileStream(item.SubItems(4).Text, IO.FileMode.Open, IO.FileAccess.Read)
@@ -98,12 +98,12 @@ Public Class frmMainWindow
     End Sub
     Public Function updateItem(item As ListViewItem) As DialogResult
         Dim result As DialogResult
-        If mainWindow.itemIsPhoto(item) Then
+        If mainWindow.ItemIsPhoto(item) Then
 
-            result = New frmPhotos(mainWindow.itemToPhoto(item)).ShowDialog
+            result = New frmPhotos(mainWindow.ItemToPhoto(item)).ShowDialog
         Else
 
-            result = New frmNews(mainWindow.itemToNews(item)).ShowDialog
+            result = New frmNews(mainWindow.ItemToNews(item)).ShowDialog
         End If
         Return result
     End Function
@@ -111,7 +111,7 @@ Public Class frmMainWindow
         If e.KeyCode = Keys.Delete Then
             Dim item As ListViewItem = ItemList.FocusedItem
             ItemList.Items.Remove(item)
-            mainWindow.deleteItem(item)
+            mainWindow.DeleteItem(item)
             DisplayCategory()
             TitleTextBox.Clear()
             BodyTextBox.Clear()

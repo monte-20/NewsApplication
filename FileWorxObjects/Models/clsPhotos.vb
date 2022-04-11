@@ -51,32 +51,36 @@ Public Class ClsPhotos
         query &= "VALUES (@ID,@C_LOCATION)"
 
         Using com As New SqlCommand()
-                With com
+            With com
 
                 .CommandType = CommandType.Text
-                    .CommandText = query
-                    .Parameters.AddWithValue("@ID", ID)
-                    .Parameters.AddWithValue("@C_LOCATION", Photo)
-                End With
+                .CommandText = query
+                .Parameters.AddWithValue("@ID", ID)
+                .Parameters.AddWithValue("@C_LOCATION", Photo)
+            End With
             clsDBConnectionManager.ExecuteNonQuery(com)
         End Using
 
     End Sub
-
-
     Public Overrides Sub Read()
         MyBase.Read()
         Dim query As String = "Select C_LOCATION From T_PHOTO where ID= @ID"
         Dim data(1, 1) As String
         Using com As New SqlCommand()
-                With com
+            With com
 
                 .CommandType = CommandType.Text
-                    .CommandText = query
-                    .Parameters.AddWithValue("@ID", ID)
-                End With
+                .CommandText = query
+                .Parameters.AddWithValue("@ID", ID)
+            End With
             clsDBConnectionManager.ReadData(com, data)
         End Using
         Photo = data(0, 0)
+    End Sub
+
+    Public Sub DeletePhoto()
+        If FileIO.FileSystem.FileExists(Photo) Then
+            FileIO.FileSystem.DeleteFile(Photo)
+        End If
     End Sub
 End Class

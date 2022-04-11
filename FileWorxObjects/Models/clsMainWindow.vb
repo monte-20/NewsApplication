@@ -15,15 +15,15 @@ Public Class clsMainWindow
         listViewItems = New List(Of ListViewItem)
     End Sub
 
-    Public Sub getFilesData()
+    Public Sub GetFilesData()
         newsData = clsNewsQuery.run
         photosData = clsPhotosQuery.run
     End Sub
 
 
-    Private Sub addNewsToList()
+    Private Sub AddNewsToList()
         For Each item In newsData
-            Dim record As New ListViewItem(item.NAME)
+            Dim record As New ListViewItem(item.Name)
             record.SubItems.Add(item.CreationDate)
             record.SubItems.Add(item.Description)
             record.SubItems.Add(item.ID.ToString)
@@ -34,9 +34,9 @@ Public Class clsMainWindow
         Next
     End Sub
 
-    Private Sub addPhotosToList()
+    Private Sub AddPhotosToList()
         For Each item In photosData
-            Dim record As New ListViewItem(item.NAME)
+            Dim record As New ListViewItem(item.Name)
             record.SubItems.Add(item.CreationDate)
             record.SubItems.Add(item.Description)
             record.SubItems.Add(item.ID.ToString)
@@ -48,40 +48,41 @@ Public Class clsMainWindow
 
     End Sub
 
-    Public Function getItems() As List(Of ListViewItem)
+    Public Function GetItems() As List(Of ListViewItem)
         listViewItems.Clear()
-        getFilesData()
-        addNewsToList()
-        addPhotosToList()
+        GetFilesData()
+        AddNewsToList()
+        AddPhotosToList()
         Return listViewItems
     End Function
 
-    Public Sub deleteItem(item As ListViewItem)
-
+    Public Sub DeleteItem(item As ListViewItem)
         If photoslist.Contains(item) Then
-            itemToPhoto(item).Delete()
+            Dim photo As ClsPhotos = ItemToPhoto(item)
+            photo.Delete()
+            photo.DeletePhoto()
         Else
-            itemToNews(item).Delete()
+            ItemToNews(item).Delete()
         End If
-
     End Sub
 
     Public Sub RefreshData(result As DialogResult)
         If result <> DialogResult.Cancel Then
             newsData.Clear()
             photosData.Clear()
-            getFilesData()
+            GetFilesData()
         End If
     End Sub
 
 
-    Public Function itemIsPhoto(item As ListViewItem) As Boolean
+    Public Function ItemIsPhoto(item As ListViewItem) As Boolean
         Return photoslist.Contains(item)
     End Function
 
-    Public Function itemToNews(item As ListViewItem) As ClsNews
+    Public Function ItemToNews(item As ListViewItem) As ClsNews
         Dim obj As New ClsNews
-        obj.NAME = item.SubItems(0).Text
+
+        obj.Name = item.SubItems(0).Text
         Date.TryParse(item.SubItems(1).Text, obj.CreationDate)
         obj.Description = item.SubItems(2).Text
         Guid.TryParse(item.SubItems(3).Text, obj.ID)
@@ -91,9 +92,9 @@ Public Class clsMainWindow
         Return obj
     End Function
 
-    Public Function itemToPhoto(item As ListViewItem) As ClsPhotos
+    Public Function ItemToPhoto(item As ListViewItem) As ClsPhotos
         Dim obj As New ClsPhotos
-        obj.NAME = item.SubItems(0).Text
+        obj.Name = item.SubItems(0).Text
         Date.TryParse(item.SubItems(1).Text, obj.CreationDate)
         obj.Description = item.SubItems(2).Text
         Guid.TryParse(item.SubItems(3).Text, obj.ID)
