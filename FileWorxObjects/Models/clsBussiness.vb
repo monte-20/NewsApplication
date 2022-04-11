@@ -30,7 +30,7 @@ Public Class clsBussiness
     End Sub
     Private Sub UpdateData()
         Dim query As String = "Update T_BUSSINESSOBJECT "
-        query &= "set ID=@ID,C_DESCRIPTION=@C_DESCRIPTION,C_CREATIONDATE=@C_CREATIONDATE,C_NAME= @C_NAME,C_ClASSID=@C_ClASSID "
+        query &= "set C_DESCRIPTION=@C_DESCRIPTION,C_CREATIONDATE=@C_CREATIONDATE,C_NAME= @C_NAME,C_ClASSID=@C_ClASSID "
         query &= "where ID=@ID"
 
         Using com As New SqlCommand()
