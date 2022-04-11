@@ -32,13 +32,23 @@ Public Class frmPhotos
     End Sub
 
     Private Sub BrowseBtn_Click(sender As Object, e As EventArgs) Handles BrowseBtn.Click
-        Dim FileName As String = PhotoObj.BrowsePhoto
+        Dim FileName As String = BrowsePhoto()
+
         If FileName <> String.Empty Then
             PathTextBox.Text = FileName
             showphoto(FileName)
         End If
     End Sub
-
+    Public Function BrowsePhoto() As String
+        Dim result As DialogResult
+        Dim PhotoPath As String
+        Using fileChooser As New OpenFileDialog
+            fileChooser.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.tif"
+            result = fileChooser.ShowDialog
+            PhotoPath = fileChooser.FileName
+        End Using
+        Return PhotoPath
+    End Function
     Private Sub SaveBtn_Click(sender As Object, e As EventArgs) Handles SaveBtn.Click
         If ValidateForm() Then
             SaveFormData()

@@ -1,5 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports System.Windows.Forms
 
 Public Class ClsPhotos
     Inherits clsFile
@@ -11,19 +10,8 @@ Public Class ClsPhotos
 
     Public Property Photo() As String
 
-
-    Public Function BrowsePhoto() As String
-        Dim result As DialogResult
-        Using fileChooser As New OpenFileDialog
-            fileChooser.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.tif"
-            result = fileChooser.ShowDialog
-            Photo = fileChooser.FileName
-        End Using
-        Return Photo
-    End Function
-
     Private Sub CopyPhoto()
-        Dim path As String = Application.StartupPath & "\Data\Photos\" & ID.ToString
+        Dim path As String = clsShared.PhotosPath & ID.ToString
         path &= Photo.Substring(Photo.LastIndexOf("."))
         If Not path.Equals(Photo) Then
             FileIO.FileSystem.CopyFile(Photo, path, True)
