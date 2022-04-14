@@ -69,6 +69,9 @@
     <Compile Include="Models\clsBussiness.vb" />
     <Compile Include="Models\clsBussinessQuery.vb" />
     <Compile Include="Models\clsFileQuery.vb" />
+    <Compile Include="Models\clsListView.vb" />
+    <Compile Include="Models\clsListViewItem.vb" />
+    <Compile Include="Models\clsListViewValue.vb" />
     <Compile Include="Models\clsMainWindow.vb" />
     <Compile Include="Models\clsNews.vb" />
     <Compile Include="Models\clsFile.vb" />

@@ -1,10 +1,11 @@
 ﻿Imports System.Data.SqlClient
+Imports System.IO
 
 Public Class ClsPhotos
     Inherits clsFile
 
     Sub New()
-        ClassID = BussinessClasses.PHOTOS
+        ClassID = BussinessClass.PHOTOS
     End Sub
 
 
@@ -14,7 +15,7 @@ Public Class ClsPhotos
         Dim path As String = clsShared.PhotosPath & ID.ToString
         path &= Photo.Substring(Photo.LastIndexOf("."))
         If Not path.Equals(Photo) Then
-            FileIO.FileSystem.CopyFile(Photo, path, True)
+            File.Copy(Photo, path, True)
             Photo = path
         End If
     End Sub
@@ -35,14 +36,14 @@ Public Class ClsPhotos
         query &= "where ID=@ID"
 
         Using com As New SqlCommand()
-                With com
+            With com
 
                 .CommandType = CommandType.Text
-                    .CommandText = query
-                    .Parameters.AddWithValue("@ID", ID)
-                    .Parameters.AddWithValue("@C_LOCATION", Photo)
-                End With
-            clsDBConnectionManager.ExecuteNonQuery(com)
+                .CommandText = query
+                .Parameters.AddWithValue("@ID", ID)
+                .Parameters.AddWithValue("@C_LOCATION", Photo)
+            End With
+            DBManager.ExecuteNonQuery(com)
         End Using
 
     End Sub
@@ -58,7 +59,7 @@ Public Class ClsPhotos
                 .Parameters.AddWithValue("@ID", ID)
                 .Parameters.AddWithValue("@C_LOCATION", Photo)
             End With
-            clsDBConnectionManager.ExecuteNonQuery(com)
+            DBManager.ExecuteNonQuery(com)
         End Using
 
     End Sub
@@ -73,14 +74,14 @@ Public Class ClsPhotos
                 .CommandText = query
                 .Parameters.AddWithValue("@ID", ID)
             End With
-            clsDBConnectionManager.ReadData(com, data)
+            DBManager.ReadData(com, data)
         End Using
         Photo = data(0, 0)
     End Sub
 
     Public Sub DeletePhoto()
-        If FileIO.FileSystem.FileExists(Photo) Then
-            FileIO.FileSystem.DeleteFile(Photo)
+        If File.Exists(Photo) Then
+            File.Delete(Photo)
         End If
     End Sub
 End Class

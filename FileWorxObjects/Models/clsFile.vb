@@ -25,7 +25,7 @@ Public Class clsFile
                 .Parameters.AddWithValue("@ID", ID)
                 .Parameters.AddWithValue("@C_Body", Body)
             End With
-            clsDBConnectionManager.ExecuteNonQuery(com)
+            dbManager.ExecuteNonQuery(com)
         End Using
 
     End Sub
@@ -41,21 +41,22 @@ Public Class clsFile
                     .Parameters.AddWithValue("@ID", ID)
                     .Parameters.AddWithValue("@C_Body", Body)
                 End With
-            clsDBConnectionManager.ExecuteNonQuery(com)
+            dbmanager.ExecuteNonQuery(com)
         End Using
 
     End Sub
     Public Overrides Sub Read()
         MyBase.Read()
         Dim query As String = "Select C_BODY From T_FILE where ID= @ID"
-        Dim data(1, 1) As String
+        Dim data(0, 0) As String
+
         Using com As New SqlCommand()
             With com
                 .CommandType = CommandType.Text
                 .CommandText = query
                 .Parameters.AddWithValue("@ID", ID)
             End With
-            clsDBConnectionManager.ReadData(com, data)
+            DBManager.ReadData(com, data)
         End Using
         Body = data(0, 0)
     End Sub

@@ -2,12 +2,11 @@
 
 Public Class frmMainWindow
     Private mainWindow As clsMainWindow
-    Private items As List(Of ListViewItem)
-    Private categoryDisplayed As Boolean
+    Private categoryLayoutDisplayed As Boolean
     Private Sub NewsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewsToolStripMenuItem.Click
         Dim articleDialog As New frmNews()
         If articleDialog.ShowDialog() <> DialogResult.Cancel Then
-            ShowItems()
+            ShowItems(mainWindow.GetItems)
         End If
 
     End Sub
@@ -15,7 +14,7 @@ Public Class frmMainWindow
     Private Sub PhotoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PhotoToolStripMenuItem.Click
         Dim imageArticleDialog As New frmPhotos()
         If imageArticleDialog.ShowDialog() <> DialogResult.Cancel Then
-            ShowItems()
+            ShowItems(mainWindow.GetItems)
         End If
     End Sub
 
@@ -24,34 +23,84 @@ Public Class frmMainWindow
         userDialog.ShowDialog()
     End Sub
 
-    Private Sub DisplayCategory()
+    Private Sub BussinessViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BussinessViewToolStripMenuItem.Click
+        Dim bussinessQuery As New clsBussinessQuery
+        Dim data As clsListView = bussinessQuery.listLoad
+        UpdateListView(data)
+    End Sub
+    Private Sub FilesViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FilesViewToolStripMenuItem.Click
+        Dim fileQuery As New clsFileQuery
+        Dim data As clsListView = fileQuery.listLoad
+        UpdateListView(data)
+    End Sub
+    Private Sub UsersViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UsersViewToolStripMenuItem.Click
+        Dim userQuery As New clsUserQuery
+        Dim data As clsListView = userQuery.listLoad
+        UpdateListView(data)
+    End Sub
+    Private Sub UpdateListView(data As clsListView)
+        Dim headers As New List(Of String)
+        loadHeaders(data, headers)
+        updateListViewHeaders(headers)
+        Dim items As New List(Of ListViewItem)
+        loadItems(data, items)
+        ShowItems(items)
+    End Sub
+
+
+
+    Private Sub loadHeaders(data As clsListView, ByRef headers As List(Of String))
+        If data.Items.Count > 0 Then
+            For Each value As clsListViewValue In data.Items(0).Values
+                headers.Add(value.Header)
+            Next
+        Else
+            MessageBox.Show("Bussiness is Empty")
+        End If
+    End Sub
+    Private Sub updateListViewHeaders(headers As List(Of String))
+        ItemList.Columns.Clear()
+        For Each header As String In headers
+            Dim column As New ColumnHeader With {.Text = header}
+            ItemList.Columns.Add(column)
+        Next
+    End Sub
+    Private Sub loadItems(data As clsListView, ByRef items As List(Of ListViewItem))
+        For Each item As clsListViewItem In data.Items
+            items.Add(ConvertToListViewItem(item))
+        Next
+    End Sub
+
+    Private Function ConvertToListViewItem(item As clsListViewItem) As ListViewItem
+        Dim ListItem As New ListViewItem(item.Values(0).Value)
+        For i As Integer = 1 To item.Values.Count - 1
+            ListItem.SubItems.Add(item.Values(i).Value)
+        Next
+        Return ListItem
+    End Function
+
+    Private Sub DisplayCategoryLayout()
         TabControl.TabPages.Remove(ImageTab)
         CategoryPanel.Visible = True
-        categoryDisplayed = True
+        categoryLayoutDisplayed = True
     End Sub
-    Private Sub DisplayImage()
-        If categoryDisplayed Then
+    Private Sub DisplayImageLayout()
+        If categoryLayoutDisplayed Then
             TabControl.TabPages.Add(ImageTab)
             CategoryPanel.Visible = False
-            categoryDisplayed = False
+            categoryLayoutDisplayed = False
         End If
     End Sub
 
     Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DisplayCategory()
+        DisplayCategoryLayout()
         mainWindow = New clsMainWindow
-        ShowItems()
+        ShowItems(mainWindow.GetItems)
     End Sub
 
-    Private Sub ShowToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowToolStripMenuItem.Click
-        ItemList.Items.Clear()
-        ShowItems()
-    End Sub
 
-    Private Sub ShowItems()
+    Private Sub ShowItems(items As List(Of ListViewItem))
         ItemList.Items.Clear()
-        items = mainWindow.GetItems
-
         For Each item As ListViewItem In items
             ItemList.Items.Add(item)
         Next
@@ -70,7 +119,7 @@ Public Class frmMainWindow
 
     Private Sub CheckLayout(item As ListViewItem)
         If mainWindow.ItemIsPhoto(item) Then
-            DisplayImage()
+            DisplayImageLayout()
             Try
                 Dim imageFileStream As New IO.FileStream(item.SubItems(4).Text, IO.FileMode.Open, IO.FileAccess.Read)
                 Dim readInImage As Image = Image.FromStream(imageFileStream)
@@ -80,7 +129,7 @@ Public Class frmMainWindow
                 MessageBox.Show(ex.Message)
             End Try
         Else
-            DisplayCategory()
+            DisplayCategoryLayout()
             CategoryTextBox.Text = item.SubItems(4).Text
         End If
     End Sub
@@ -92,7 +141,7 @@ Public Class frmMainWindow
             Dim result As DialogResult = updateItem(item)
             If result <> DialogResult.Cancel Then
                 mainWindow.RefreshData(result)
-                ShowItems()
+                ShowItems(mainWindow.GetItems)
             End If
         End If
     End Sub
@@ -112,7 +161,7 @@ Public Class frmMainWindow
             Dim item As ListViewItem = ItemList.FocusedItem
             ItemList.Items.Remove(item)
             mainWindow.DeleteItem(item)
-            DisplayCategory()
+            DisplayCategoryLayout()
             TitleTextBox.Clear()
             BodyTextBox.Clear()
             CreationDateTextBox.Clear()

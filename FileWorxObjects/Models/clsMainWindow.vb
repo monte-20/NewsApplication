@@ -20,7 +20,6 @@ Public Class clsMainWindow
         photosData = clsPhotosQuery.run
     End Sub
 
-
     Private Sub AddNewsToList()
         For Each item In newsData
             Dim record As New ListViewItem(item.Name)
@@ -73,7 +72,6 @@ Public Class clsMainWindow
             GetFilesData()
         End If
     End Sub
-
 
     Public Function ItemIsPhoto(item As ListViewItem) As Boolean
         Return photoslist.Contains(item)

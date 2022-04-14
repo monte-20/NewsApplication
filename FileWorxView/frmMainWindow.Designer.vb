@@ -29,6 +29,9 @@ Partial Class frmMainWindow
         Me.PhotoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NewUserToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BussinessViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FilesViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.UsersViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SettingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
@@ -121,9 +124,28 @@ Partial Class frmMainWindow
         '
         'ShowToolStripMenuItem
         '
+        Me.ShowToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BussinessViewToolStripMenuItem, Me.FilesViewToolStripMenuItem, Me.UsersViewToolStripMenuItem})
         Me.ShowToolStripMenuItem.Name = "ShowToolStripMenuItem"
-        Me.ShowToolStripMenuItem.Size = New System.Drawing.Size(48, 20)
-        Me.ShowToolStripMenuItem.Text = "Show"
+        Me.ShowToolStripMenuItem.Size = New System.Drawing.Size(50, 20)
+        Me.ShowToolStripMenuItem.Text = "Menu"
+        '
+        'BussinessViewToolStripMenuItem
+        '
+        Me.BussinessViewToolStripMenuItem.Name = "BussinessViewToolStripMenuItem"
+        Me.BussinessViewToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BussinessViewToolStripMenuItem.Text = "Bussiness View"
+        '
+        'FilesViewToolStripMenuItem
+        '
+        Me.FilesViewToolStripMenuItem.Name = "FilesViewToolStripMenuItem"
+        Me.FilesViewToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.FilesViewToolStripMenuItem.Text = "Files View"
+        '
+        'UsersViewToolStripMenuItem
+        '
+        Me.UsersViewToolStripMenuItem.Name = "UsersViewToolStripMenuItem"
+        Me.UsersViewToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.UsersViewToolStripMenuItem.Text = "Users View"
         '
         'SettingToolStripMenuItem
         '
@@ -525,4 +547,7 @@ Partial Class frmMainWindow
     Friend WithEvents Description As ColumnHeader
     Friend WithEvents ImageTab As TabPage
     Friend WithEvents ImageBox As PictureBox
+    Friend WithEvents BussinessViewToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents FilesViewToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents UsersViewToolStripMenuItem As ToolStripMenuItem
 End Class

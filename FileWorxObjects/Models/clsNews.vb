@@ -13,7 +13,7 @@ Public Class ClsNews
 
 
     Sub New()
-        ClassID = BussinessClasses.NEWS
+        ClassID = BussinessClass.NEWS
     End Sub
 
 
@@ -38,7 +38,7 @@ Public Class ClsNews
                 .Parameters.AddWithValue("@ID", ID)
                 .Parameters.AddWithValue("@C_Category", Category)
             End With
-            clsDBConnectionManager.ExecuteNonQuery(com)
+            dbManager.ExecuteNonQuery(com)
         End Using
     End Sub
     Private Sub InsertData()
@@ -52,7 +52,7 @@ Public Class ClsNews
                 .Parameters.AddWithValue("@ID", ID)
                 .Parameters.AddWithValue("@C_Category", Category)
             End With
-            clsDBConnectionManager.ExecuteNonQuery(com)
+            DBManager.ExecuteNonQuery(com)
         End Using
     End Sub
 
@@ -66,7 +66,7 @@ Public Class ClsNews
                 .CommandText = query
                 .Parameters.AddWithValue("@ID", ID)
             End With
-            clsDBConnectionManager.ReadData(com, data)
+            DBManager.ReadData(com, data)
         End Using
         Category = Convert.ToInt32(data(0, 0))
     End Sub
