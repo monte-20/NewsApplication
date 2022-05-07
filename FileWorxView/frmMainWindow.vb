@@ -2,11 +2,20 @@
 
 Public Class frmMainWindow
     Private mainWindow As clsMainWindow
+    Private listManager As ListViewManager
     Private categoryLayoutDisplayed As Boolean
+    Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DisplayCategoryLayout()
+        mainWindow = New clsMainWindow
+        listManager = New ListViewManager
+        listManager.ShowItems(mainWindow.GetItems)
+        UpdateNumberOfItems()
+    End Sub
+
     Private Sub NewsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewsToolStripMenuItem.Click
         Dim articleDialog As New frmNews()
         If articleDialog.ShowDialog() <> DialogResult.Cancel Then
-            ShowItems(mainWindow.GetItems)
+            listManager.ShowItems(mainWindow.GetItems)
         End If
 
     End Sub
@@ -14,7 +23,7 @@ Public Class frmMainWindow
     Private Sub PhotoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PhotoToolStripMenuItem.Click
         Dim imageArticleDialog As New frmPhotos()
         If imageArticleDialog.ShowDialog() <> DialogResult.Cancel Then
-            ShowItems(mainWindow.GetItems)
+            listManager.ShowItems(mainWindow.GetItems)
         End If
     End Sub
 
@@ -26,98 +35,53 @@ Public Class frmMainWindow
     Private Sub BussinessViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BussinessViewToolStripMenuItem.Click
         Dim bussinessQuery As New clsBussinessQuery
         Dim data As clsListView = bussinessQuery.listLoad
-        UpdateListView(data)
+        listManager.UpdateListView(data)
+        BussinessRadioButton.Checked = True
+        HideBodyFilter()
+        UpdateNumberOfItems()
     End Sub
+
     Private Sub FilesViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FilesViewToolStripMenuItem.Click
         Dim fileQuery As New clsFileQuery
         Dim data As clsListView = fileQuery.listLoad
-        UpdateListView(data)
+        listManager.UpdateListView(data)
+        FileRadioButton.Checked = True
+        ShowBodyFilter()
+        UpdateNumberOfItems()
     End Sub
+
     Private Sub UsersViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UsersViewToolStripMenuItem.Click
         Dim userQuery As New clsUserQuery
         Dim data As clsListView = userQuery.listLoad
-        UpdateListView(data)
-    End Sub
-    Private Sub UpdateListView(data As clsListView)
-        Dim headers As New List(Of String)
-        loadHeaders(data, headers)
-        updateListViewHeaders(headers)
-        Dim items As New List(Of ListViewItem)
-        loadItems(data, items)
-        ShowItems(items)
+        listManager.UpdateListView(data)
+        UserRadioButton.Checked = True
+        HideBodyFilter()
+        UpdateNumberOfItems()
     End Sub
 
-
-
-    Private Sub loadHeaders(data As clsListView, ByRef headers As List(Of String))
-        If data.Items.Count > 0 Then
-            For Each value As clsListViewValue In data.Items(0).Values
-                headers.Add(value.Header)
-            Next
-        Else
-            MessageBox.Show("Bussiness is Empty")
-        End If
-    End Sub
-    Private Sub updateListViewHeaders(headers As List(Of String))
-        ItemList.Columns.Clear()
-        For Each header As String In headers
-            Dim column As New ColumnHeader With {.Text = header}
-            ItemList.Columns.Add(column)
-        Next
-    End Sub
-    Private Sub loadItems(data As clsListView, ByRef items As List(Of ListViewItem))
-        For Each item As clsListViewItem In data.Items
-            items.Add(ConvertToListViewItem(item))
-        Next
+    Private Sub ShowBodyFilter()
+        BodyFilterLabel.Show()
+        BodyFilterTextBox.Show()
     End Sub
 
-    Private Function ConvertToListViewItem(item As clsListViewItem) As ListViewItem
-        Dim ListItem As New ListViewItem(item.Values(0).Value)
-        For i As Integer = 1 To item.Values.Count - 1
-            ListItem.SubItems.Add(item.Values(i).Value)
-        Next
-        Return ListItem
-    End Function
-
-    Private Sub DisplayCategoryLayout()
-        TabControl.TabPages.Remove(ImageTab)
-        CategoryPanel.Visible = True
-        categoryLayoutDisplayed = True
-    End Sub
-    Private Sub DisplayImageLayout()
-        If categoryLayoutDisplayed Then
-            TabControl.TabPages.Add(ImageTab)
-            CategoryPanel.Visible = False
-            categoryLayoutDisplayed = False
-        End If
-    End Sub
-
-    Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DisplayCategoryLayout()
-        mainWindow = New clsMainWindow
-        ShowItems(mainWindow.GetItems)
+    Private Sub HideBodyFilter()
+        BodyFilterLabel.Hide()
+        BodyFilterTextBox.Hide()
     End Sub
 
 
-    Private Sub ShowItems(items As List(Of ListViewItem))
-        ItemList.Items.Clear()
-        For Each item As ListViewItem In items
-            ItemList.Items.Add(item)
-        Next
-    End Sub
-
-    Private Sub ItemList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ItemList.SelectedIndexChanged
+    Private Sub ItemList_SelectedIndexChanged(sender As Object, e As EventArgs)
         Dim item As ListViewItem = ItemList.FocusedItem
         If item.Index > -1 Then
             TitleTextBox.Text = item.Text
             CreationDateTextBox.Text = item.SubItems(1).Text
             BodyTextBox.Text = item.SubItems(5).Text
-            CheckLayout(item)
+            CheckItemLayout(item)
         End If
 
     End Sub
 
-    Private Sub CheckLayout(item As ListViewItem)
+    Private Sub CheckItemLayout(item As ListViewItem)
         If mainWindow.ItemIsPhoto(item) Then
             DisplayImageLayout()
             Try
@@ -133,15 +97,28 @@ Public Class frmMainWindow
             CategoryTextBox.Text = item.SubItems(4).Text
         End If
     End Sub
+    Private Sub DisplayCategoryLayout()
+        TabControl.TabPages.Remove(ImageTab)
+        CategoryPanel.Visible = True
+        categoryLayoutDisplayed = True
+    End Sub
 
-    Private Sub ItemList_DoubleClick(sender As Object, e As MouseEventArgs) Handles ItemList.MouseDoubleClick, ItemList.MouseUp
+    Private Sub DisplayImageLayout()
+        If categoryLayoutDisplayed Then
+            TabControl.TabPages.Add(ImageTab)
+            CategoryPanel.Visible = False
+            categoryLayoutDisplayed = False
+        End If
+    End Sub
+
+    Private Sub ItemList_DoubleClick(sender As Object, e As MouseEventArgs)
         If e.Button = MouseButtons.Right Or
             e.Clicks = 2 Then
             Dim item As ListViewItem = ItemList.FocusedItem
             Dim result As DialogResult = updateItem(item)
             If result <> DialogResult.Cancel Then
                 mainWindow.RefreshData(result)
-                ShowItems(mainWindow.GetItems)
+                listManager.ShowItems(mainWindow.GetItems)
             End If
         End If
     End Sub
@@ -156,7 +133,7 @@ Public Class frmMainWindow
         End If
         Return result
     End Function
-    Private Sub ItemList_KeyDown(sender As Object, e As KeyEventArgs) Handles ItemList.KeyDown
+    Private Sub ItemList_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = Keys.Delete Then
             Dim item As ListViewItem = ItemList.FocusedItem
             ItemList.Items.Remove(item)
@@ -171,4 +148,114 @@ Public Class frmMainWindow
     End Sub
 
 
+    Private Sub ExactDateRadioButton_CheckedChanged(sender As Object, e As EventArgs) Handles ExactDateRadioButton.CheckedChanged
+        If ExactDateRadioButton.Checked Then
+            DateFilterLabel1.Text = "Date"
+            DateFilterLabel1.Show()
+            DateTimeFilter1.Show()
+            DateFilterLabel2.Hide()
+            DateTimeFilter2.Hide()
+        End If
+    End Sub
+    Private Sub IntervalDateRadioButton_CheckedChanged(sender As Object, e As EventArgs) Handles IntervalDateRadioButton.CheckedChanged
+        If IntervalDateRadioButton.Checked Then
+            DateFilterLabel1.Text = "Start Date"
+            DateFilterLabel1.Show()
+            DateTimeFilter1.Show()
+            DateFilterLabel2.Show()
+            DateTimeFilter2.Show()
+        End If
+    End Sub
+    Private Sub NoneDateRadioButton_CheckedChanged(sender As Object, e As EventArgs) Handles NoneDateRadioButton.CheckedChanged
+        If NoneDateRadioButton.Checked Then
+            DateFilterLabel1.Hide()
+            DateTimeFilter1.Hide()
+            DateFilterLabel2.Hide()
+            DateTimeFilter2.Hide()
+        End If
+    End Sub
+
+    Private Sub FilterBtn_Click(sender As Object, e As EventArgs) Handles FilterBtn.Click
+        If BussinessRadioButton.Checked Then
+            BussinessFilter()
+        ElseIf FileRadioButton.Checked Then
+            FileFilter()
+        ElseIf UserRadioButton.Checked Then
+            UserFilter()
+        End If
+        UpdateNumberOfItems()
+    End Sub
+
+    Private Sub UserFilter()
+        Dim titleFilter As String = TitleFilterTextBox.Text
+        Dim filter As New clsBussinessFilter
+        With filter
+            .NameFilter = titleFilter
+            If ExactDateRadioButton.Checked Then
+                Dim dateFilter As Date = DateTimeFilter1.Value
+                .ExactDateFilter = dateFilter
+            ElseIf IntervalDateRadioButton.Checked Then
+                Dim startDateFilter As Date = DateTimeFilter1.Value
+                Dim endDateFilter As Date = DateTimeFilter2.Value
+                .StartDateFilter = startDateFilter
+                .EndDateFilter = endDateFilter
+            End If
+        End With
+        Dim Users As New clsUserQuery
+        With Users
+            .filter = filter
+        End With
+        Dim data = Users.listLoad
+        listManager.UpdateListView(data)
+    End Sub
+
+    Private Sub FileFilter()
+        Dim titleFilter As String = TitleFilterTextBox.Text
+        Dim bodyFilter As String = BodyFilterTextBox.Text
+        Dim filter As New clsFileFilter
+        With filter
+            .NameFilter = titleFilter
+            .BodyFilter = bodyFilter
+            If ExactDateRadioButton.Checked Then
+                Dim dateFilter As Date = DateTimeFilter1.Value
+                .ExactDateFilter = dateFilter
+            ElseIf IntervalDateRadioButton.Checked Then
+                Dim startDateFilter As Date = DateTimeFilter1.Value
+                Dim endDateFilter As Date = DateTimeFilter2.Value
+                .StartDateFilter = startDateFilter
+                .EndDateFilter = endDateFilter
+            End If
+        End With
+        Dim files As New clsFileQuery
+        With files
+            .filter = filter
+        End With
+        Dim data = files.listLoad
+        listManager.UpdateListView(data)
+    End Sub
+
+    Private Sub BussinessFilter()
+        Dim titleFilter As String = TitleFilterTextBox.Text
+        Dim filter As New clsBussinessFilter
+        With filter
+            .NameFilter = titleFilter
+            If ExactDateRadioButton.Checked Then
+                Dim dateFilter As Date = DateTimeFilter1.Value
+                .ExactDateFilter = dateFilter
+            ElseIf IntervalDateRadioButton.Checked Then
+                Dim startDateFilter As Date = DateTimeFilter1.Value
+                Dim endDateFilter As Date = DateTimeFilter2.Value
+                .StartDateFilter = startDateFilter
+                .EndDateFilter = endDateFilter
+            End If
+        End With
+        Dim bussiness As New clsBussinessQuery With {.filter = filter}
+        Dim data = bussiness.listLoad
+        listManager.UpdateListView(data)
+    End Sub
+
+    Private Sub UpdateNumberOfItems()
+        Dim NumberOfItems As Integer = ItemList.Items.Count
+        NumberOfItemsLabel2.Text = NumberOfItems
+    End Sub
 End Class
