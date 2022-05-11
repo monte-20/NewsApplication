@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
+Imports Newtonsoft.Json
 
 Public Class ClsPhotos
     Inherits clsFile
@@ -12,73 +13,48 @@ Public Class ClsPhotos
     Public Property Photo() As String
 
     Private Sub CopyPhoto()
-        Dim path As String = clsShared.PhotosPath & ID.ToString
+        Dim directoryPath = clsShared.PhotosPath
+        Dim path As String = directoryPath & ID.ToString
         path &= Photo.Substring(Photo.LastIndexOf("."))
+        If Not Directory.Exists(directoryPath) Then
+            Directory.CreateDirectory(directoryPath)
+        End If
         If Not path.Equals(Photo) Then
             File.Copy(Photo, path, True)
             Photo = path
         End If
     End Sub
 
-    Public Overrides Sub Update()
-        MyBase.Update()
-        CopyPhoto()
-        If CanInsert Then
+    Public Sub Update()
+        If ID.Equals(Guid.Empty) Then
             InsertData()
-            CanInsert = False
         Else
             UpdateData()
         End If
+        CopyPhoto()
     End Sub
+
     Private Sub UpdateData()
-        Dim query As String = "Update T_PHOTO "
-        query &= "set C_LOCATION=@C_LOCATION "
-        query &= "where ID=@ID"
-
-        Using com As New SqlCommand()
-            With com
-
-                .CommandType = CommandType.Text
-                .CommandText = query
-                .Parameters.AddWithValue("@ID", ID)
-                .Parameters.AddWithValue("@C_LOCATION", Photo)
-            End With
-            DBManager.ExecuteNonQuery(com)
-        End Using
-
+        Dim apiURL = "https://localhost:44321/api/photo/putphoto/" & ID.ToString
+        api.UpdateData(apiURL, Me)
     End Sub
+
     Private Sub InsertData()
-        Dim query As String = "insert into T_PHOTO "
-        query &= "VALUES (@ID,@C_LOCATION)"
-
-        Using com As New SqlCommand()
-            With com
-
-                .CommandType = CommandType.Text
-                .CommandText = query
-                .Parameters.AddWithValue("@ID", ID)
-                .Parameters.AddWithValue("@C_LOCATION", Photo)
-            End With
-            DBManager.ExecuteNonQuery(com)
-        End Using
-
-    End Sub
-    Public Overrides Sub Read()
-        MyBase.Read()
-        Dim query As String = "Select C_LOCATION From T_PHOTO where ID= @ID"
-        Dim data(1, 1) As String
-        Using com As New SqlCommand()
-            With com
-
-                .CommandType = CommandType.Text
-                .CommandText = query
-                .Parameters.AddWithValue("@ID", ID)
-            End With
-            DBManager.ReadData(com, data)
-        End Using
-        Photo = data(0, 0)
+        Dim apiURL = "https://localhost:44321/api/photo/postphoto"
+        api.InsertData(apiURL, Me)
     End Sub
 
+    Public Async Function Read() As Task
+        Dim apiURL = "https://localhost:44321/api/photo/getphoto/" & ID.ToString
+        Dim responseBody As String = Await api.ReadData(apiURL)
+        Dim data As ClsPhotos = JsonConvert.DeserializeObject(Of ClsPhotos)(responseBody)
+        CreationDate = data.CreationDate
+        Description = data.Description
+        Name = data.Name
+        ClassID = data.ClassID
+        Body = data.Body
+        Photo = data.Photo
+    End Function
     Public Sub DeletePhoto()
         If File.Exists(Photo) Then
             File.Delete(Photo)

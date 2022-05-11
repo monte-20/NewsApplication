@@ -18,14 +18,12 @@ Public Class frmPhotos
     End Sub
 
     Private Sub showphoto(path As String)
-        Try
-            Dim imageFileStream As New IO.FileStream(path, IO.FileMode.Open, IO.FileAccess.Read)
+
+        Using imageFileStream As New IO.FileStream(path, IO.FileMode.Open, IO.FileAccess.Read)
             Dim readInImage As Image = Image.FromStream(imageFileStream)
             ImageBox.Image = readInImage
-            imageFileStream.Close()
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
+        End Using
+
     End Sub
     Private Sub CancelBtn_Click(sender As Object, e As EventArgs) Handles CancelBtn.Click
         DialogResult = DialogResult.Cancel

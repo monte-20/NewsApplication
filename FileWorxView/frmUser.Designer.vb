@@ -92,7 +92,6 @@ Partial Class frmUser
         Me.PasswordTextBox.Location = New System.Drawing.Point(93, 64)
         Me.PasswordTextBox.MaxLength = 255
         Me.PasswordTextBox.Name = "PasswordTextBox"
-        Me.PasswordTextBox.PasswordChar = Global.Microsoft.VisualBasic.ChrW(35)
         Me.PasswordTextBox.Size = New System.Drawing.Size(179, 20)
         Me.PasswordTextBox.TabIndex = 6
         '
@@ -129,7 +128,7 @@ Partial Class frmUser
         Me.Label3.TabIndex = 9
         Me.Label3.Text = "Password"
         '
-        'UserForm
+        'frmUser
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -143,7 +142,7 @@ Partial Class frmUser
         Me.Controls.Add(Me.Panel5)
         Me.MaximumSize = New System.Drawing.Size(300, 250)
         Me.MinimumSize = New System.Drawing.Size(300, 250)
-        Me.Name = "UserForm"
+        Me.Name = "frmUser"
         Me.Text = "UserForm"
         Me.Panel5.ResumeLayout(False)
         Me.Panel5.PerformLayout()

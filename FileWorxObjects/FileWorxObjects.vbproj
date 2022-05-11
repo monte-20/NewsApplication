@@ -44,6 +44,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\FileWorxView\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -65,7 +68,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAO\clsDBConnectionManager.vb" />
+    <Compile Include="Models\clsApiManager.vb" />
     <Compile Include="Models\clsBussiness.vb" />
     <Compile Include="Models\clsBussinessFilter.vb" />
     <Compile Include="Models\clsBussinessQuery.vb" />
@@ -74,7 +77,6 @@
     <Compile Include="Models\clsListView.vb" />
     <Compile Include="Models\clsListViewItem.vb" />
     <Compile Include="Models\clsListViewValue.vb" />
-    <Compile Include="Models\clsMainWindow.vb" />
     <Compile Include="Models\clsNews.vb" />
     <Compile Include="Models\clsFile.vb" />
     <Compile Include="Models\clsNewsQuery.vb" />
@@ -117,6 +119,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

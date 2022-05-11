@@ -7,6 +7,13 @@ Public Class frmUser
         InitializeComponent()
         user = New ClsUser
     End Sub
+    Sub New(obj As ClsUser)
+        InitializeComponent()
+        user = obj
+        UsernameTextBox.Text = user.Username
+        PasswordTextBox.Text = user.Password
+        NameTextBox.Text = user.Name
+    End Sub
     Private Sub CancelBtn_Click(sender As Object, e As EventArgs) Handles CancelBtn.Click
         DialogResult = DialogResult.Cancel
     End Sub

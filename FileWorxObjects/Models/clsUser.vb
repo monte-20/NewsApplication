@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports Newtonsoft.Json
 
 Public Class ClsUser
     Inherits clsBussiness
@@ -10,60 +11,32 @@ Public Class ClsUser
     Sub New()
         ClassID = BussinessClass.USER
     End Sub
-    Public Overrides Sub Update()
-        MyBase.Update()
-        If CanInsert Then
+    Public Sub Update()
+        If ID.Equals(Guid.Empty) Then
             InsertData()
-            CanInsert = False
         Else
             UpdateData()
         End If
     End Sub
     Private Sub UpdateData()
-        Dim query As String = "Update T_USER "
-        query &= "set C_USERNAME=@C_USERNAME,C_PASSWORD=@C_PASSWORD "
-        query &= "where ID=@ID"
-
-        Using com As New SqlCommand()
-            With com
-                .CommandType = CommandType.Text
-                .CommandText = query
-                .Parameters.AddWithValue("@ID", ID)
-                .Parameters.AddWithValue("@C_USERNAME", Username)
-                .Parameters.AddWithValue("@C_PASSWORD", Password)
-            End With
-            DBManager.ExecuteNonQuery(com)
-        End Using
-
+        Dim apiURL = "https://localhost:44321/api/user/putuser/" * ID.ToString
+        api.UpdateData(apiURL, Me)
     End Sub
+
     Private Sub InsertData()
-        Dim query As String = "insert into T_USER VALUES (@ID,@C_USERNAME,@C_PASSWORD)"
-
-        Using com As New SqlCommand()
-            With com
-                .CommandType = CommandType.Text
-                .CommandText = query
-                .Parameters.AddWithValue("@ID", ID)
-                .Parameters.AddWithValue("@C_USERNAME", Username)
-                .Parameters.AddWithValue("@C_PASSWORD", Password)
-            End With
-            DBManager.ExecuteNonQuery(com)
-        End Using
+        Dim apiURL = "https://localhost:44321/api/user/postuser"
+        api.InsertData(apiURL, Me)
     End Sub
 
-    Public Overrides Sub Read()
-        MyBase.Read()
-        Dim query As String = "Select C_USERNAME,C_PASSWORD From T_USER where ID= @ID"
-        Dim data(0, 1) As String
-        Using com As New SqlCommand()
-            With com
-                .CommandType = CommandType.Text
-                .CommandText = query
-                .Parameters.AddWithValue("@ID", ID)
-            End With
-            DBManager.ReadData(com, data)
-        End Using
-        Username = data(0, 0)
-        Password = data(0, 1)
-    End Sub
+    Public Async Function Read() As Task
+        Dim apiURL = "https://localhost:44321/api/user/getuser/" & ID.ToString
+        Dim responseBody As String = Await api.ReadData(apiURL)
+        Dim data As ClsUser = JsonConvert.DeserializeObject(Of ClsUser)(responseBody)
+        CreationDate = data.CreationDate
+        Description = data.Description
+        Name = data.Name
+        ClassID = data.ClassID
+        Username = data.Username
+        Password = data.Password
+    End Function
 End Class

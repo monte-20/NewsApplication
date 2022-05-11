@@ -1,5 +1,5 @@
 ﻿Imports FileWorxObjects
-Public Class ListViewManager
+Public Class clsListViewManager
     Public Sub ShowItems(items As List(Of ListViewItem))
         frmMainWindow.ItemList.Items.Clear()
         For Each item As ListViewItem In items
@@ -16,13 +16,13 @@ Public Class ListViewManager
     End Sub
 
     Private Sub loadHeaders(data As clsListView, ByRef headers As List(Of String))
-        If data.Items.Count > 0 Then
-            For Each value As clsListViewValue In data.Items(0).Values
-                headers.Add(value.Header)
-            Next
-        Else
+        If data.Items.Count <= 0 Then
             MessageBox.Show("There is no items here, Add one")
+            Return
         End If
+        For i As Integer = 0 To 2
+            headers.Add(data.Items(0).Values(i).Header)
+        Next
     End Sub
     Private Sub updateListViewHeaders(headers As List(Of String))
         frmMainWindow.ItemList.Columns.Clear()
