@@ -112,7 +112,6 @@ Public Class clsUserQuery
             item.Values.Add(New clsListViewValue With {.Header = "ID", .Value = retreivedData(i, 0)})
             item.Values.Add(New clsListViewValue With {.Header = "ClassID", .Value = retreivedData(i, 3)})
 
-            ' item.Values.Add(New clsListViewValue With {.Header = "Password", .Value = retreivedData(i, 5)})
 
             ItemsList.Items.Add(item)
         Next

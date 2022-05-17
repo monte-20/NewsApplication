@@ -1,6 +1,6 @@
 ﻿
-Public Class clsBussinessQuery
-    Public Property Filter() As New clsBussinessFilter
+Public Class clsBusinessQuery
+    Public Property Filter() As New clsBusinessFilter
     Private ReadOnly Property apiUrl As String = "https://localhost:44321/api/bussiness/bussinessitems"
     Private ReadOnly Property api As New clsApiManager
 

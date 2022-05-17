@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class clsFile
-    Inherits clsBussiness
+    Inherits clsBusiness
 
     Public Property Body() As String
 

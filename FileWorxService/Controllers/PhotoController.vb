@@ -8,7 +8,7 @@ Namespace Controllers
 
 
 
-        Public Function Getphoto(ByVal id As Guid) As clsFile
+        Public Function Getphoto(ByVal id As Guid) As ClsPhotos
             Dim item As New ClsPhotos With {.ID = id}
             item.Read()
             Return item

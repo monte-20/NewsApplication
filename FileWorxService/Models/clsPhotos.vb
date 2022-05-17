@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports System.IO
 
 Public Class ClsPhotos
     Inherits clsFile
@@ -6,12 +7,23 @@ Public Class ClsPhotos
     Sub New()
         ClassID = BussinessClass.PHOTOS
     End Sub
+    Private Sub CopyPhoto()
 
+        Dim directoryPath = Hosting.HostingEnvironment.MapPath("~/Photos/")
+        Dim path As String = IO.Path.Combine(directoryPath & ID.ToString)
+        path &= Photo.Substring(Photo.LastIndexOf("."))
+
+        If Not path.Equals(Photo) Then
+            File.Move(Photo, path)
+            Photo = path
+        End If
+    End Sub
 
     Public Property Photo() As String
 
     Public Overrides Sub Update()
         MyBase.Update()
+        CopyPhoto()
         If CanInsert Then
             InsertData()
             CanInsert = False

@@ -312,6 +312,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Photos\" />
     <Folder Include="Properties\" />
     <Folder Include="Views\User\" />
   </ItemGroup>

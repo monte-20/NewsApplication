@@ -8,7 +8,7 @@ Namespace Controllers
 
 
 
-        Public Function GetNews(ByVal id As Guid) As clsFile
+        Public Function GetNews(ByVal id As Guid) As ClsNews
             Dim item As New ClsNews With {.ID = id}
             item.Read()
             Return item

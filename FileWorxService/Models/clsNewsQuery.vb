@@ -135,8 +135,7 @@ Public Class clsNewsQuery
             item.Values.Add(New clsListViewValue With {.Header = "Description", .Value = retreivedData(i, 1)})
             item.Values.Add(New clsListViewValue With {.Header = "ID", .Value = retreivedData(i, 0)})
             item.Values.Add(New clsListViewValue With {.Header = "ClassID", .Value = retreivedData(i, 4)})
-            item.Values.Add(New clsListViewValue With {.Header = "Body", .Value = retreivedData(i, 5)})
-            item.Values.Add(New clsListViewValue With {.Header = "Category", .Value = retreivedData(i, 6)})
+
             ItemsList.Items.Add(item)
         Next
         Return ItemsList

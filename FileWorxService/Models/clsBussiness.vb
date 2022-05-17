@@ -81,7 +81,7 @@ Public Class clsBussiness
             DBManager.ReadData(com, data)
         End Using
         Description = data(0, 0)
-        CreationDate = data(0, 1)
+        Date.TryParse(data(0, 1), CreationDate)
         Name = data(0, 2)
     End Sub
 

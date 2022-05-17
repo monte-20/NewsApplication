@@ -2,7 +2,7 @@
 
 Public Class clsNewsQuery
 
-    Public Property Filter() As New clsBussinessFilter
+    Public Property Filter() As New clsBusinessFilter
     Private ReadOnly Property apiUrl As String = "https://localhost:44321/api/news/news"
     Private ReadOnly Property api As New clsApiManager
 

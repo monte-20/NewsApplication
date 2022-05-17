@@ -2,52 +2,40 @@
 Imports System.IO
 Imports Newtonsoft.Json
 
-Public Class ClsPhotos
+Public Class clsPhotos
     Inherits clsFile
 
     Sub New()
-        ClassID = BussinessClass.PHOTOS
+        ClassID = BusinessClass.PHOTOS
     End Sub
 
 
     Public Property Photo() As String
 
-    Private Sub CopyPhoto()
-        Dim directoryPath = clsShared.PhotosPath
-        Dim path As String = directoryPath & ID.ToString
-        path &= Photo.Substring(Photo.LastIndexOf("."))
-        If Not Directory.Exists(directoryPath) Then
-            Directory.CreateDirectory(directoryPath)
-        End If
-        If Not path.Equals(Photo) Then
-            File.Copy(Photo, path, True)
-            Photo = path
-        End If
-    End Sub
 
-    Public Sub Update()
+
+    Public Async Function Update() As Task
         If ID.Equals(Guid.Empty) Then
-            InsertData()
+            Await InsertData()
         Else
-            UpdateData()
+            Await UpdateData()
         End If
-        CopyPhoto()
-    End Sub
+    End Function
 
-    Private Sub UpdateData()
+    Private Async Function UpdateData() As Task
         Dim apiURL = "https://localhost:44321/api/photo/putphoto/" & ID.ToString
-        api.UpdateData(apiURL, Me)
-    End Sub
+        Await api.UpdateData(apiURL, Me)
+    End Function
 
-    Private Sub InsertData()
+    Private Async Function InsertData() As Task
         Dim apiURL = "https://localhost:44321/api/photo/postphoto"
-        api.InsertData(apiURL, Me)
-    End Sub
+        Await api.InsertData(apiURL, Me)
+    End Function
 
     Public Async Function Read() As Task
         Dim apiURL = "https://localhost:44321/api/photo/getphoto/" & ID.ToString
         Dim responseBody As String = Await api.ReadData(apiURL)
-        Dim data As ClsPhotos = JsonConvert.DeserializeObject(Of ClsPhotos)(responseBody)
+        Dim data As clsPhotos = JsonConvert.DeserializeObject(Of clsPhotos)(responseBody)
         CreationDate = data.CreationDate
         Description = data.Description
         Name = data.Name

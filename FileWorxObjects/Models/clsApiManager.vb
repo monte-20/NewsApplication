@@ -5,7 +5,7 @@ Imports Newtonsoft.Json
 Public Class clsApiManager
     Private ReadOnly Property client As New HttpClient
 
-    Public Async Function GetAllData(apiUrl As String, filter As clsBussinessFilter) As Task(Of clsListView)
+    Public Async Function GetAllData(apiUrl As String, filter As clsBusinessFilter) As Task(Of clsListView)
         Try
             Dim body As StringContent = buildBody(filter)
             Dim response As HttpResponseMessage = Await client.PostAsync(apiUrl, body)
@@ -35,7 +35,7 @@ Public Class clsApiManager
             Throw e
         End Try
     End Function
-    Public Async Sub UpdateData(apiUrl As String, data As clsBussiness)
+    Public Async Function UpdateData(apiUrl As String, data As clsBusiness) As Task
         Try
             Dim body As StringContent = buildBody(data)
             Dim responseBody As HttpResponseMessage = Await client.PutAsync(apiUrl, body)
@@ -44,9 +44,9 @@ Public Class clsApiManager
             Console.WriteLine("Message :{0} ", e.Message)
             Throw e
         End Try
-    End Sub
+    End Function
 
-    Public Async Sub InsertData(apiUrl As String, data As clsBussiness)
+    Public Async Function InsertData(apiUrl As String, data As clsBusiness) As Task
         Try
             Dim body As StringContent = buildBody(data)
             Dim responseBody As HttpResponseMessage = Await client.PostAsync(apiUrl, body)
@@ -56,8 +56,8 @@ Public Class clsApiManager
             Throw e
         End Try
 
-    End Sub
-    Public Async Sub DeleteData(apiURL As String)
+    End Function
+    Public Async Function DeleteData(apiURL As String) As Task
         Try
             Dim responseBody As HttpResponseMessage = Await client.DeleteAsync(apiURL)
         Catch e As HttpRequestException
@@ -65,6 +65,6 @@ Public Class clsApiManager
             Console.WriteLine("Message :{0} ", e.Message)
             Throw e
         End Try
-    End Sub
+    End Function
 
 End Class

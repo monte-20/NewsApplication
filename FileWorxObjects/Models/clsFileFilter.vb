@@ -1,5 +1,5 @@
 ﻿Public Class clsFileFilter
-    Inherits clsBussinessFilter
+    Inherits clsBusinessFilter
     Public Property BodyFilter As String = String.Empty
 
 

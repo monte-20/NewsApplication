@@ -3,8 +3,8 @@ Imports System.Net.Http
 Imports System.Text
 Imports Newtonsoft.Json
 
-Public Class clsBussiness
-    Public Enum BussinessClass
+Public Class clsBusiness
+    Public Enum BusinessClass
         USER
         NEWS
         PHOTOS
@@ -19,11 +19,11 @@ Public Class clsBussiness
 
     Public Property Name() As String
 
-    Public Property ClassID() As BussinessClass
+    Public Property ClassID() As BusinessClass
 
-    Public Sub Delete()
+    Public Async Function Delete() As Task
         Dim apiURL = "https://localhost:44321/api/bussiness/DeleteItem?id=" & ID.ToString
-        api.DeleteData(apiURL)
-    End Sub
+        Await api.DeleteData(apiURL)
+    End Function
 
 End Class

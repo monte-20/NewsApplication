@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports Newtonsoft.Json
 
-Public Class ClsNews
+Public Class clsNews
     Inherits clsFile
     Public Enum Categories
         General
@@ -13,31 +13,31 @@ Public Class ClsNews
     Public Property Category() As Categories
 
     Sub New()
-        ClassID = BussinessClass.NEWS
+        ClassID = BusinessClass.NEWS
     End Sub
 
-    Public Sub Update()
+    Public Async Function Update() As Task
         If ID.Equals(Guid.Empty) Then
-            InsertData()
+            Await InsertData()
         Else
-            UpdateData()
+            Await UpdateData()
         End If
-    End Sub
+    End Function
 
-    Private Sub UpdateData()
+    Private Async Function UpdateData() As Task
         Dim apiURL = "https://localhost:44321/api/news/putnews/" & ID.ToString
-        api.UpdateData(apiURL, Me)
-    End Sub
+        Await api.UpdateData(apiURL, Me)
+    End Function
 
-    Private Sub InsertData()
+    Private Async Function InsertData() As Task
         Dim apiURL = "https://localhost:44321/api/news/postnews"
-        api.InsertData(apiURL, Me)
-    End Sub
+        Await api.InsertData(apiURL, Me)
+    End Function
 
     Public Async Function Read() As Task
         Dim apiURL = "https://localhost:44321/api/news/getnews/" & ID.ToString
         Dim responseBody As String = Await api.ReadData(apiURL)
-        Dim data As ClsNews = JsonConvert.DeserializeObject(Of ClsNews)(responseBody)
+        Dim data As clsNews = JsonConvert.DeserializeObject(Of clsNews)(responseBody)
         CreationDate = data.CreationDate
         Description = data.Description
         Name = data.Name
