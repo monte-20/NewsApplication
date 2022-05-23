@@ -211,6 +211,7 @@
     <Compile Include="Models\clsNewsQuery.vb" />
     <Compile Include="Models\clsPhotos.vb" />
     <Compile Include="Models\clsPhotosQuery.vb" />
+    <Compile Include="Models\clsShared.vb" />
     <Compile Include="Models\clsUser.vb" />
     <Compile Include="Models\clsUserQuery.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

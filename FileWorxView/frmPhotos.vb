@@ -12,7 +12,8 @@ Public Class frmPhotos
         PhotoObj = obj
         TitleTextBox.Text = PhotoObj.Name
         DescriptionTextBox.Text = PhotoObj.Description
-        Dim directoryPath = "D:/Projects/FileWorxWebApp/FileWorxWebApp/FileWorxWebApp/Photos/"
+        Dim objShared As New clsShared
+        Dim directoryPath = objShared.PhotoSharedDir
         Dim path = IO.Path.Combine(directoryPath, PhotoObj.Photo)
         PathTextBox.Text = path
         showphoto(path)
@@ -20,7 +21,8 @@ Public Class frmPhotos
     End Sub
 
     Private Sub showphoto(photoName As String)
-        Dim directoryPath = "D:/Projects/FileWorxWebApp/FileWorxWebApp/FileWorxWebApp/Photos/"
+        Dim objShared As New clsShared
+        Dim directoryPath = objShared.PhotoSharedDir
         Dim path = IO.Path.Combine(directoryPath, photoName)
         Using imageFileStream As New IO.FileStream(path, IO.FileMode.Open, IO.FileAccess.Read)
             Dim readInImage As Image = Image.FromStream(imageFileStream)

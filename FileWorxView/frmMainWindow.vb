@@ -244,7 +244,8 @@ Public Class frmMainWindow
     End Function
 
     Private Sub showphoto(photoName As String)
-        Dim directoryPath = "D:/Projects/FileWorxWebApp/FileWorxWebApp/FileWorxWebApp/Photos/"
+        Dim objShared As New clsShared
+        Dim directoryPath = objShared.PhotoSharedDir
         Dim path = IO.Path.Combine(directoryPath, photoName)
         Using imageFileStream As New IO.FileStream(path, IO.FileMode.Open, IO.FileAccess.Read)
             Dim readInImage As Image = Image.FromStream(imageFileStream)
