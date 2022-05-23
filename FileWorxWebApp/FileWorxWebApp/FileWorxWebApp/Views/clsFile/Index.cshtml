@@ -1,0 +1,164 @@
+﻿@using FileWorxWebApp.Models
+@model clsFileViewModel
+
+@{
+    ViewBag.Title = "Files";
+}
+
+@section scripts{
+    <script type="text/javascript">
+
+        function toggleExactDate() {
+            var exactDiv = document.getElementById("ExactDateDiv");
+            if (exactDiv.style.display === "none") {
+                exactDiv.style.display = "block";
+
+            } else {
+                exactDiv.style.display = "none";
+            }
+        }
+        function toggleIntervalDate() {
+            var intervalDiv = document.getElementById("IntervalDateDiv");
+            if (intervalDiv.style.display === "none") {
+                intervalDiv.style.display = "block";
+
+            } else {
+                intervalDiv.style.display = "none";
+            }
+        }
+
+        function toggleDate() {
+            toggleExactDate();
+            toggleIntervalDate();
+        }
+
+        function showAccordionItem() {
+         var panel =document.getElementById("accordionBody");
+         if (panel.style.display === "block") {
+            panel.style.display = "none";
+         } else {
+            panel.style.display = "block";
+         }
+           
+        }
+
+    </script>
+}
+
+<br />
+
+<h3>
+    Files
+    <small class="text-muted">-News and Photos-</small>
+</h3>
+
+<br />
+
+<div>
+    <p>
+        <button type="button" class="btn btn-outline-dark"> @Html.ActionLink("New News", "CreateNews", "clsNews")</button>
+        or
+        <button type="button" class="btn btn-outline-dark">@Html.ActionLink("New Photo", "CreatePhoto", "clsPhoto")</button>
+    </p>
+</div>
+
+
+ <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button collapsed accordion" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" onclick="showAccordionItem()">
+         Filters
+        </button>
+      </h2>
+      <div id="accordionBody" class="accordion-collapse panel" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style=" display:none">
+        <div class="accordion-body" >
+            <div>
+              @using (Html.BeginForm("Index", "clsFile", FormMethod.Post))
+               {
+                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group" onchange="toggleDate()">
+                  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked="">
+                  <label class="btn btn-outline-primary" for="btnradio1">Exact</label>
+                  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" >
+                  <label class="btn btn-outline-primary" for="btnradio2">Interval</label>
+                 </div>
+
+                <div class="row">
+                  <div class="col-7 col-md-3" id="ExactDateDiv">
+                    Exact Date: @Html.EditorFor(model => model.filter.ExactDateFilter, new { htmlAttributes = new { @type = "datetime-local" } })
+                  </div>
+                  <div class="col-7 col-md-3" id="IntervalDateDiv" style=" display:none">
+                   <div class="row">
+                    <div class="col-md-7">
+                     <p>
+                      Start Date: @Html.EditorFor(model => model.filter.StartDateFilter, new { htmlAttributes = new { @type = "datetime-local" } })
+                     </p>
+                    </div>
+                    <div class="col-md-7">
+                     <p>
+                       End Date: @Html.EditorFor(model => model.filter.EndDateFilter, new { htmlAttributes = new { @type = "datetime-local" } })
+                     </p>
+                    </div>
+                   </div>
+                  </div>
+                  <div class="col-2 col-md-2">  
+                   Title: @Html.EditorFor(model => model.filter.NameFilter)
+                  </div>
+                  <div class="col-5 col-md-2">
+                   Body: @Html.EditorFor(model => model.filter.BodyFilter)
+                  </div>
+
+                </div>
+                <br />
+                <button type="submit" class="btn btn-secondary">Filter</button>
+               }
+            </div>
+        </div>
+      </div>
+    </div>
+ </div>
+
+
+
+@if (Model.list.Items.Count <= 0)
+{
+    <h4>There is no item here, add one</h4>
+}
+else
+{
+    <table class="table table-striped">
+        <caption>Number Of Items: @Model.list.Items.Count</caption>
+            <tr>
+                @for (int i = 0; i <= Model.list.Items[0].Values.Count - 3; i++)
+                {
+
+                    <th>
+                        @Html.DisplayFor(model => model.list.Items[0].Values[i].Header)
+                    </th>
+                    <th></th>
+
+                }
+                <th></th>
+            </tr>
+        @foreach (var item in Model.list.Items)
+        {
+            <tr>
+                @for (int i = 0; i <= Model.list.Items[0].Values.Count - 3; i++)
+                {
+
+                    <td>
+                        @Html.DisplayFor(model => item.Values[i].Value)
+                    </td>
+
+                    <td></td>
+
+                }
+            <td>
+                <button type="button" class="btn btn-outline-info">@Html.ActionLink("Details", "Details", new { id = item.Values[item.Values.Count - 2].Value, classID = item.Values[item.Values.Count - 1].Value })</button>
+                <button type="button" class="btn btn-outline-danger"> @Html.ActionLink("Delete", "Delete", new { id = item.Values[item.Values.Count - 2].Value })</button>
+            </td>
+            </tr>
+        }
+
+    </table>
+}
+

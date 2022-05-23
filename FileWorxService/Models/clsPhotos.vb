@@ -9,13 +9,14 @@ Public Class ClsPhotos
     End Sub
     Private Sub CopyPhoto()
 
-        Dim directoryPath = Hosting.HostingEnvironment.MapPath("~/Photos/")
-        Dim path As String = IO.Path.Combine(directoryPath & ID.ToString)
-        path &= Photo.Substring(Photo.LastIndexOf("."))
+        Dim directoryPath = Path.GetDirectoryName(Photo)
+        Dim destinationPath As String = Path.Combine(directoryPath, ID.ToString)
+        destinationPath &= Photo.Substring(Photo.LastIndexOf("."))
 
-        If Not path.Equals(Photo) Then
-            File.Move(Photo, path)
-            Photo = path
+        If Not destinationPath.Equals(Photo) Then
+            File.Move(Photo, destinationPath)
+            Photo = Path.GetFileName(destinationPath)
+
         End If
     End Sub
 

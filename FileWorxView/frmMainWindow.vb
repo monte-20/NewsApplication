@@ -34,7 +34,7 @@ Public Class frmMainWindow
     End Sub
 
     Private Async Sub BussinessViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BussinessViewToolStripMenuItem.Click
-        Dim bussinessQuery As New clsBussinessQuery
+        Dim bussinessQuery As New clsBusinessQuery
         Dim data = Await bussinessQuery.run
         UpdateListView(data)
         FilterCB.SelectedIndex = 0
@@ -112,8 +112,8 @@ Public Class frmMainWindow
         End If
     End Sub
 
-    Private Function BuildBussinessFilter() As clsBussinessFilter
-        Dim filter As New clsBussinessFilter
+    Private Function BuildBussinessFilter() As clsBusinessFilter
+        Dim filter As New clsBusinessFilter
         With filter
             .NameFilter = TitleFilterTB.Text
             If DateCB.SelectedIndex = 1 Then
@@ -144,8 +144,8 @@ Public Class frmMainWindow
     End Function
 
     Private Async Sub FilterBussiness()
-        Dim filter As clsBussinessFilter = BuildBussinessFilter()
-        Dim bussiness As New clsBussinessQuery With {.Filter = filter}
+        Dim filter As clsBusinessFilter = BuildBussinessFilter()
+        Dim bussiness As New clsBusinessQuery With {.Filter = filter}
         Dim data As clsListView = Await bussiness.run
         UpdateListView(data)
     End Sub
@@ -158,7 +158,7 @@ Public Class frmMainWindow
     End Sub
 
     Private Async Sub FilterUser()
-        Dim filter As clsBussinessFilter = BuildBussinessFilter()
+        Dim filter As clsBusinessFilter = BuildBussinessFilter()
         Dim user As New clsUserQuery With {.Filter = filter}
         Dim data As clsListView = Await user.run
         UpdateListView(data)
@@ -243,7 +243,9 @@ Public Class frmMainWindow
         Return photo
     End Function
 
-    Private Sub showphoto(path As String)
+    Private Sub showphoto(photoName As String)
+        Dim directoryPath = "D:/Projects/FileWorxWebApp/FileWorxWebApp/FileWorxWebApp/Photos/"
+        Dim path = IO.Path.Combine(directoryPath, photoName)
         Using imageFileStream As New IO.FileStream(path, IO.FileMode.Open, IO.FileAccess.Read)
             Dim readInImage As Image = Image.FromStream(imageFileStream)
             ImageBox.Image = readInImage
@@ -284,15 +286,15 @@ Public Class frmMainWindow
     End Function
 
     Private Function isNews(classID As Integer) As Boolean
-        Return classID = clsBussiness.BussinessClass.NEWS
+        Return classID = clsBusiness.BusinessClass.NEWS
     End Function
 
     Private Function isPhoto(classID As Integer) As Boolean
-        Return classID = clsBussiness.BussinessClass.PHOTOS
+        Return classID = clsBusiness.BusinessClass.PHOTOS
     End Function
 
     Private Function isUser(classID As Integer) As Boolean
-        Return classID = clsBussiness.BussinessClass.USER
+        Return classID = clsBusiness.BusinessClass.USER
     End Function
 
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
@@ -310,14 +312,14 @@ Public Class frmMainWindow
         Dim classID As Integer = Val(item.SubItems(4).Text)
         If isNews(classID) Then
             Dim news As ClsNews = Await getNewsObject(id)
-            news.Delete()
+            Await news.Delete()
         ElseIf isPhoto(classID) Then
             Dim photo As ClsPhotos = Await getPhotoObject(id)
-            photo.Delete()
+            Await photo.Delete()
             photo.DeletePhoto()
         ElseIf isUser(classID) Then
             Dim user As ClsUser = Await getUserObject(id)
-            user.Delete()
+            Await user.Delete()
         End If
     End Sub
 

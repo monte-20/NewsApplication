@@ -1,0 +1,62 @@
+﻿@model FileWorxObjects.clsUser
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>User Details</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            <fieldset>
+                <input class="form-control" id="readOnlyInput" type="text" value=" @Html.DisplayFor(model => model.Name)" readonly="">
+            </fieldset>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+
+        <dd>
+            <fieldset>
+                <input class="form-control" id="readOnlyInput" type="text" value="@Html.DisplayFor(model => model.CreationDate)" readonly="">
+            </fieldset>
+            
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            <fieldset>
+                <input class="form-control" id="readOnlyInput" type="text" value="@Html.DisplayFor(model => model.Username)" readonly="">
+            </fieldset>
+            
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            <fieldset>
+                <input class="form-control" id="readOnlyInput" type="text" value="@Html.DisplayFor(model => model.Password)" readonly="">
+            </fieldset>
+            
+        </dd>
+
+    </dl>
+</div>
+<button type="button" class="btn btn-outline-dark"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID })</button>
+<button type="button" class="btn btn-outline-dark"> @Html.ActionLink("Back to List", "Index")</button>
+
+

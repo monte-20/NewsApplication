@@ -1,0 +1,73 @@
+﻿@model FileWorxObjects.clsNews
+
+@{
+    ViewBag.Title = "News Details";
+}
+
+<h2>News Details</h2>
+
+<div>
+    <h4>News</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            <fieldset>
+                <input class="form-control" id="readOnlyInput" type="text" value="@Html.DisplayFor(model => model.Name)" readonly="">
+            </fieldset>            
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+
+        <dd>
+            <fieldset>
+                <input class="form-control" id="readOnlyInput" type="text" value=" @Html.DisplayFor(model => model.Category)" readonly="">
+            </fieldset>
+           
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+
+        <dd>
+            <fieldset>
+                <input class="form-control" id="readOnlyInput" type="text" value=" @Html.DisplayFor(model => model.CreationDate)" readonly="">
+            </fieldset>
+           
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            <fieldset>
+                <input class="form-control" id="readOnlyInput" type="text" value="@Html.DisplayFor(model => model.Description)" readonly="">
+            </fieldset>
+            
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Body)
+        </dt>
+
+        <dd>
+            <fieldset>
+                <input class="form-control" id="readOnlyInput" type="text" value="@Html.DisplayFor(model => model.Body)" readonly="">
+            </fieldset>
+        </dd>
+
+    </dl>
+</div>
+
+    <button type="button" class="btn btn-outline-dark">@Html.ActionLink("Edit", "EditNews", new { id = Model.ID })</button>
+    <button type="button" class="btn btn-outline-dark">@Html.ActionLink("Back to List", "Index", "clsFile")</button>
+
+     
+

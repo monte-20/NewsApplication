@@ -12,13 +12,16 @@ Public Class frmPhotos
         PhotoObj = obj
         TitleTextBox.Text = PhotoObj.Name
         DescriptionTextBox.Text = PhotoObj.Description
-        PathTextBox.Text = PhotoObj.Photo
-        showphoto(PhotoObj.Photo)
+        Dim directoryPath = "D:/Projects/FileWorxWebApp/FileWorxWebApp/FileWorxWebApp/Photos/"
+        Dim path = IO.Path.Combine(directoryPath, PhotoObj.Photo)
+        PathTextBox.Text = path
+        showphoto(path)
         BodyTextBox.Text = PhotoObj.Body
     End Sub
 
-    Private Sub showphoto(path As String)
-
+    Private Sub showphoto(photoName As String)
+        Dim directoryPath = "D:/Projects/FileWorxWebApp/FileWorxWebApp/FileWorxWebApp/Photos/"
+        Dim path = IO.Path.Combine(directoryPath, photoName)
         Using imageFileStream As New IO.FileStream(path, IO.FileMode.Open, IO.FileAccess.Read)
             Dim readInImage As Image = Image.FromStream(imageFileStream)
             ImageBox.Image = readInImage
