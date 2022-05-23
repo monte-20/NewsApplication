@@ -10,13 +10,13 @@ Public Class ClsPhotos
     Private Sub CopyPhoto()
         Dim objShared As New clsShared
         Dim sharedDirectoryPath = objShared.PhotoSharedDir
-        Dim directoryPath = Path.GetDirectoryName(Photo)
         Dim destinationPath As String = Path.Combine(sharedDirectoryPath, ID.ToString)
         destinationPath &= Photo.Substring(Photo.LastIndexOf("."))
-
-        If Not String.Equals(destinationPath, Path.Combine(sharedDirectoryPath, Photo)) Then
+        Dim photoCurrentPath As String = Path.Combine(sharedDirectoryPath, Photo)
+        If Not String.Equals(destinationPath, photoCurrentPath) Then
             File.Copy(Photo, destinationPath, True)
-            RemoveDuplicatePhoto(sharedDirectoryPath, directoryPath)
+            Dim currentDirectoryPath = Path.GetDirectoryName(Photo)
+            RemoveDuplicatePhoto(sharedDirectoryPath, currentDirectoryPath)
             Photo = Path.GetFileName(destinationPath)
 
         End If
