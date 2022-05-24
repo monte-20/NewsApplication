@@ -212,16 +212,16 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\clsBusiness\Index.cshtml" />
-    <Content Include="Views\clsNews\CreateNews.cshtml" />
+    <Content Include="Views\clsNews\Create.cshtml" />
     <Content Include="Views\clsFile\Index.cshtml" />
-    <Content Include="Views\clsNews\NewsDetails.cshtml" />
-    <Content Include="Views\clsPhoto\PhotoDetails.cshtml" />
-    <Content Include="Views\clsNews\EditNews.cshtml" />
-    <Content Include="Views\clsPhoto\EditPhoto.cshtml" />
+    <Content Include="Views\clsNews\Details.cshtml" />
+    <Content Include="Views\clsPhoto\Details.cshtml" />
+    <Content Include="Views\clsNews\Edit.cshtml" />
+    <Content Include="Views\clsPhoto\Edit.cshtml" />
     <Content Include="Views\clsUser\Index.cshtml" />
     <Content Include="Views\clsUser\Details.cshtml" />
     <Content Include="Views\clsUser\Create.cshtml" />
-    <Content Include="Views\clsPhoto\CreatePhoto.cshtml" />
+    <Content Include="Views\clsPhoto\Create.cshtml" />
     <Content Include="Views\clsUser\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>

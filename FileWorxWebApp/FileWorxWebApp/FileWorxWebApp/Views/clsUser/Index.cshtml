@@ -54,7 +54,7 @@
 
 
 <div>
-    <button type="button" class="btn btn-outline-dark">@Html.ActionLink("Create New", "Create")</button>
+    @Html.ActionLink("New User", "Create","",new { @class = "btn btn-outline-light" })
 </div>
 
 <div class="accordion" id="accordionExample">
@@ -142,10 +142,9 @@ else
 
                 }
             <td>
-               
-                <button type="button" class="btn btn-outline-primary"> @Html.ActionLink("Edit", "Edit", new { id = item.Values[item.Values.Count - 2].Value })</button>
-                <button type="button" class="btn btn-outline-info">@Html.ActionLink("Details", "Details", new { id = item.Values[item.Values.Count - 2].Value, classID = item.Values[item.Values.Count - 1].Value })</button>
-                <button type="button" class="btn btn-outline-danger"> @Html.ActionLink("Delete", "Delete", new { id = item.Values[item.Values.Count - 2].Value })</button>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Values[item.Values.Count - 2].Value }, new { @class = "btn btn-outline-primary" })
+                @Html.ActionLink("Details", "Details", new { id = item.Values[item.Values.Count - 2].Value, classID = item.Values[item.Values.Count - 1].Value }, new { @class = "btn btn-outline-info" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Values[item.Values.Count - 2].Value }, new { @class = "btn btn-outline-danger" })
             </td>
             </tr>
         }

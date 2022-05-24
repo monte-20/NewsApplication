@@ -17,7 +17,7 @@
         <dd>
             <fieldset>
                 <input class="form-control" id="readOnlyInput" type="text" value="@Html.DisplayFor(model => model.Name)" readonly="">
-            </fieldset>            
+            </fieldset>
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Category)
@@ -27,7 +27,7 @@
             <fieldset>
                 <input class="form-control" id="readOnlyInput" type="text" value=" @Html.DisplayFor(model => model.Category)" readonly="">
             </fieldset>
-           
+
         </dd>
 
         <dt>
@@ -38,7 +38,7 @@
             <fieldset>
                 <input class="form-control" id="readOnlyInput" type="text" value=" @Html.DisplayFor(model => model.CreationDate)" readonly="">
             </fieldset>
-           
+
         </dd>
 
         <dt>
@@ -47,9 +47,9 @@
 
         <dd>
             <fieldset>
-                <input class="form-control" id="readOnlyInput" type="text" value="@Html.DisplayFor(model => model.Description)" readonly="">
+                <textarea class="form-control" id="readOnlyInput" readonly="" rows="2">@Html.DisplayFor(model => model.Description)</textarea>
             </fieldset>
-            
+
         </dd>
 
 
@@ -59,15 +59,14 @@
 
         <dd>
             <fieldset>
-                <textarea class="form-control" id="readOnlyInput" readonly="">@Html.DisplayFor(model => model.Body)</textarea>
+                <textarea class="form-control" id="readOnlyInput" readonly="" rows="10">@Html.DisplayFor(model => model.Body)</textarea>
             </fieldset>
         </dd>
 
     </dl>
 </div>
+@Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-dark" })
+@Html.ActionLink("Back to List", "Index", "clsFile", "", new { @class = "btn btn-dark" })
 
-    <button type="button" class="btn btn-outline-dark">@Html.ActionLink("Edit", "EditNews", new { id = Model.ID })</button>
-    <button type="button" class="btn btn-outline-dark">@Html.ActionLink("Back to List", "Index", "clsFile")</button>
 
-     
 

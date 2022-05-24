@@ -13,13 +13,13 @@ namespace FileWorxWebApp.Controllers
     {
 
 
-        public ActionResult CreatePhoto()
+        public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreatePhoto(clsPhotos photo, HttpPostedFileBase file)
+        public async Task<ActionResult> Create(clsPhotos photo, HttpPostedFileBase file)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace FileWorxWebApp.Controllers
                 return View();
             }
         }
-        public async Task<ActionResult> PhotoDetails(Guid id)
+        public async Task<ActionResult> Details(Guid id)
         {
 
             clsPhotos photos = new clsPhotos()
@@ -52,7 +52,7 @@ namespace FileWorxWebApp.Controllers
             return View(photos);
         }
 
-        public async Task<ActionResult> EditPhoto(string id)
+        public async Task<ActionResult> Edit(string id)
         {
             Guid.TryParse(id, out Guid guid);
             clsPhotos photo = new clsPhotos()
@@ -64,7 +64,7 @@ namespace FileWorxWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> EditPhoto(clsPhotos photo)
+        public async Task<ActionResult> Edit(clsPhotos photo)
         {
             try
             {

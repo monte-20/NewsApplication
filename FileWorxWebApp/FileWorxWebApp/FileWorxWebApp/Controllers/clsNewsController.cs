@@ -10,12 +10,12 @@ namespace FileWorxWebApp.Controllers
 {
     public class clsNewsController : Controller
     {
-        public ActionResult CreateNews()
+        public ActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        public async Task<ActionResult> CreateNews(clsNews news)
+        public async Task<ActionResult> Create(clsNews news)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace FileWorxWebApp.Controllers
                 return View();
             }
         }
-        public async Task<ActionResult> NewsDetails(Guid id)
+        public async Task<ActionResult> Details(Guid id)
         {
             clsNews news = new clsNews()
             {
@@ -37,7 +37,7 @@ namespace FileWorxWebApp.Controllers
             await news.Read();
             return View(news);
         }
-        public async Task<ActionResult> EditNews(string id)
+        public async Task<ActionResult> Edit(string id)
         {
             Guid.TryParse(id, out Guid guid);
             clsNews news = new clsNews()
@@ -49,7 +49,7 @@ namespace FileWorxWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> EditNews(clsNews news)
+        public async Task<ActionResult> Edit(clsNews news)
         {
             try
             {

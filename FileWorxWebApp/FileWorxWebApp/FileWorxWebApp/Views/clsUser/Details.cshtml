@@ -29,7 +29,7 @@
             <fieldset>
                 <input class="form-control" id="readOnlyInput" type="text" value="@Html.DisplayFor(model => model.CreationDate)" readonly="">
             </fieldset>
-            
+
         </dd>
 
         <dt>
@@ -40,7 +40,7 @@
             <fieldset>
                 <input class="form-control" id="readOnlyInput" type="text" value="@Html.DisplayFor(model => model.Username)" readonly="">
             </fieldset>
-            
+
         </dd>
 
         <dt>
@@ -51,12 +51,13 @@
             <fieldset>
                 <input class="form-control" id="readOnlyInput" type="text" value="@Html.DisplayFor(model => model.Password)" readonly="">
             </fieldset>
-            
+
         </dd>
 
     </dl>
-</div>
-<button type="button" class="btn btn-outline-dark"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID })</button>
-<button type="button" class="btn btn-outline-dark"> @Html.ActionLink("Back to List", "Index")</button>
 
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-dark" })
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-dark" })
+
+    
 

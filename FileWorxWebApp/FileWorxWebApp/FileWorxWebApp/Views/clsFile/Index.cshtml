@@ -56,9 +56,10 @@
 
 <div>
     <p>
-        <button type="button" class="btn btn-outline-dark"> @Html.ActionLink("New News", "CreateNews", "clsNews")</button>
+        @Html.ActionLink("New News", "Create", "clsNews","", new { @class = "btn btn-outline-light" })
         or
-        <button type="button" class="btn btn-outline-dark">@Html.ActionLink("New Photo", "CreatePhoto", "clsPhoto")</button>
+        @Html.ActionLink("New Edit", "Create", "clsPhoto","", new { @class = "btn btn-outline-light" })
+
     </p>
 </div>
 
@@ -153,9 +154,10 @@ else
 
                 }
             <td>
-                <button type="button" class="btn btn-outline-info">@Html.ActionLink("Details", "Details", new { id = item.Values[item.Values.Count - 2].Value, classID = item.Values[item.Values.Count - 1].Value })</button>
-                <button type="button" class="btn btn-outline-danger"> @Html.ActionLink("Delete", "Delete", new { id = item.Values[item.Values.Count - 2].Value })</button>
-            </td>
+                @Html.ActionLink("Details", "Details", new { id = item.Values[item.Values.Count - 2].Value, classID = item.Values[item.Values.Count - 1].Value }, new { @class = "btn btn-outline-info" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Values[item.Values.Count - 2].Value }, new { @class = "btn btn-outline-danger" })
+
+           </td>
             </tr>
         }
 

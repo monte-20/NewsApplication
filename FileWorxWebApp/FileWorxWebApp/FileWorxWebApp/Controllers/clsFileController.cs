@@ -38,10 +38,10 @@ namespace FileWorxWebApp.Controllers
             if (type == 1)
             {
                
-                return  RedirectToAction("newsDetails","clsNews" ,new {id=guid });
+                return  RedirectToAction("Details","clsNews" ,new {id=guid });
             }else if(type == 2)
             {
-                return RedirectToAction("photoDetails","clsPhoto", new { id = guid });
+                return RedirectToAction("Details","clsPhoto", new { id = guid });
             }
             return RedirectToAction("Index");
         }
