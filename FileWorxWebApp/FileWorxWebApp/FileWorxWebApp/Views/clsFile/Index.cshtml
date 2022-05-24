@@ -58,7 +58,7 @@
     <p>
         @Html.ActionLink("New News", "Create", "clsNews","", new { @class = "btn btn-outline-light" })
         or
-        @Html.ActionLink("New Edit", "Create", "clsPhoto","", new { @class = "btn btn-outline-light" })
+        @Html.ActionLink("New Photo", "Create", "clsPhoto","", new { @class = "btn btn-outline-light" })
 
     </p>
 </div>
@@ -155,7 +155,7 @@ else
                 }
             <td>
                 @Html.ActionLink("Details", "Details", new { id = item.Values[item.Values.Count - 2].Value, classID = item.Values[item.Values.Count - 1].Value }, new { @class = "btn btn-outline-info" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.Values[item.Values.Count - 2].Value }, new { @class = "btn btn-outline-danger" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Values[item.Values.Count - 2].Value, classID = item.Values[item.Values.Count - 1].Value }, new { @class = "btn btn-outline-danger" })
 
            </td>
             </tr>

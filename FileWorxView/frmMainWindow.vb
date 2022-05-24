@@ -315,7 +315,8 @@ Public Class frmMainWindow
             Dim news As ClsNews = Await getNewsObject(id)
             Await news.Delete()
         ElseIf isPhoto(classID) Then
-            Dim photo As ClsPhotos = Await getPhotoObject(id)
+            Dim photo As clsPhotos = Await getPhotoObject(id)
+            Await photo.Read()
             Await photo.Delete()
             photo.DeletePhoto()
         ElseIf isUser(classID) Then

@@ -45,26 +45,23 @@ namespace FileWorxWebApp.Controllers
             }
             return RedirectToAction("Index");
         }
-      
-       
-        public async Task<ActionResult> Delete(string id)
+
+
+        public ActionResult Delete(string id, string classID)
         {
-            try
+            int.TryParse(classID, out int type);
+            Guid.TryParse(id, out Guid guid);
+            if (type == 1)
             {
 
-                Guid.TryParse(id, out Guid guid);
-                clsFile file = new clsFile()
-                {
-                    ID = guid,
-                };
-                await file.Delete();
-                return RedirectToAction("Index");
+                return RedirectToAction("Delete", "clsNews", new { id = guid });
             }
-            catch (Exception)
+            else if (type == 2)
             {
-
-                return View();
+                return RedirectToAction("Delete", "clsPhoto", new { id = guid });
             }
+            return RedirectToAction("Index");
+
         }
     }
 }

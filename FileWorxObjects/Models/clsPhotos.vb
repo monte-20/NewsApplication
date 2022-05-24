@@ -44,8 +44,10 @@ Public Class clsPhotos
         Photo = data.Photo
     End Function
     Public Sub DeletePhoto()
-        If File.Exists(Photo) Then
-            File.Delete(Photo)
+        Dim obj As New clsShared
+        Dim PhotoPath = Path.Combine(obj.PhotoSharedDir, Photo)
+        If File.Exists(PhotoPath) Then
+            File.Delete(PhotoPath)
         End If
     End Sub
 End Class

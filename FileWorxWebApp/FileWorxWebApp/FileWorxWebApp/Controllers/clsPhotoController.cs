@@ -77,6 +77,26 @@ namespace FileWorxWebApp.Controllers
                 return View();
             }
         }
+        public async Task<ActionResult> Delete(string id)
+        {
+            try
+            {
 
+                Guid.TryParse(id, out Guid guid);
+                clsPhotos photo = new clsPhotos()
+                {
+                    ID = guid,
+                };
+                await photo.Read();
+                await photo.Delete();
+                photo.DeletePhoto();
+                return RedirectToAction("Index", "clsFile");
+            }
+            catch (Exception)
+            {
+
+                return View();
+            }
+        }
     }
 }

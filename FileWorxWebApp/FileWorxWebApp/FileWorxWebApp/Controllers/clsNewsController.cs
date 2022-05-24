@@ -62,5 +62,25 @@ namespace FileWorxWebApp.Controllers
                 return View();
             }
         }
+
+        public async Task<ActionResult> Delete(string id)
+        {
+            try
+            {
+
+                Guid.TryParse(id, out Guid guid);
+                clsNews news = new clsNews()
+                {
+                    ID = guid,
+                };
+                await news.Delete();
+                return RedirectToAction("Index","clsFile");
+            }
+            catch (Exception)
+            {
+
+                return View();
+            }
+        }
     }
 }
