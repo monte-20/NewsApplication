@@ -192,6 +192,7 @@
     <Compile Include="Controllers\FileController.vb" />
     <Compile Include="Controllers\NewsController.vb" />
     <Compile Include="Controllers\PhotoController.vb" />
+    <Compile Include="Controllers\ContactController.vb" />
     <Compile Include="Controllers\UserController.vb" />
     <Compile Include="DAO\clsDBConnectionManager.vb" />
     <Compile Include="Global.asax.vb">
@@ -212,7 +213,9 @@
     <Compile Include="Models\clsPhotos.vb" />
     <Compile Include="Models\clsPhotosQuery.vb" />
     <Compile Include="Models\clsShared.vb" />
+    <Compile Include="Models\clsContact.vb" />
     <Compile Include="Models\clsUser.vb" />
+    <Compile Include="Models\clsContactQuery.vb" />
     <Compile Include="Models\clsUserQuery.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -307,7 +310,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.vbhtml" />
-    <Content Include="Views\Home\Index.vbhtml" />
     <Content Include="Views\Shared\Error.vbhtml" />
     <Content Include="Views\Shared\_Layout.vbhtml" />
   </ItemGroup>

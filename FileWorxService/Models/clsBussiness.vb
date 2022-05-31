@@ -1,6 +1,12 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class clsBussiness
+    Public Enum BussinessClass
+        USER
+        NEWS
+        PHOTOS
+        CONTACT
+    End Enum
 
     Public Property ID() As Guid = Guid.Empty
 
@@ -11,11 +17,6 @@ Public Class clsBussiness
     Public Property Name() As String
 
     Public Property CanInsert As Boolean
-    Public Enum BussinessClass
-        USER
-        NEWS
-        PHOTOS
-    End Enum
 
     Public Property ClassID() As BussinessClass
 
@@ -43,7 +44,7 @@ Public Class clsBussiness
                 .Parameters.AddWithValue("@C_NAME", Name)
 
             End With
-            dbManager.ExecuteNonQuery(com)
+            DBManager.ExecuteNonQuery(com)
         End Using
 
     End Sub

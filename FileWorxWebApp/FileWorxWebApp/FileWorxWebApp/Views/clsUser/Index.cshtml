@@ -6,42 +6,7 @@
 }
 
 @section scripts{
-    <script type="text/javascript">
-
-        function toggleExactDate() {
-            var exactDiv = document.getElementById("ExactDateDiv");
-            if (exactDiv.style.display === "none") {
-                exactDiv.style.display = "block";
-
-            } else {
-                exactDiv.style.display = "none";
-            }
-        }
-        function toggleIntervalDate() {
-            var intervalDiv = document.getElementById("IntervalDateDiv");
-            if (intervalDiv.style.display === "none") {
-                intervalDiv.style.display = "block";
-
-            } else {
-                intervalDiv.style.display = "none";
-            }
-        }
-
-        function toggleDate() {
-            toggleExactDate();
-            toggleIntervalDate();
-        }
-
-        function showAccordionItem() {
-            var panel = document.getElementById("accordionBody");
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
-            }
-
-        }
-    </script>
+    <script src="~/Scripts/Filter_Scripts/Filter.js"></script>
 }
 
 <br />
@@ -54,7 +19,7 @@
 
 
 <div>
-    @Html.ActionLink("New User", "Create","",new { @class = "btn btn-outline-light" })
+    @Html.ActionLink("New User", "Create", "", new { @class = "btn btn-outline-light" })
 </div>
 
 <div class="accordion" id="accordionExample">
@@ -97,7 +62,7 @@
                             <div class="col-2 col-md-2">
                                 Title: @Html.EditorFor(model => model.filter.NameFilter)
                             </div>
-                           
+
 
                         </div>
                         <br />
@@ -141,11 +106,11 @@ else
                     <td></td>
 
                 }
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Values[item.Values.Count - 2].Value }, new { @class = "btn btn-outline-primary" })
-                @Html.ActionLink("Details", "Details", new { id = item.Values[item.Values.Count - 2].Value, classID = item.Values[item.Values.Count - 1].Value }, new { @class = "btn btn-outline-info" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.Values[item.Values.Count - 2].Value }, new { @class = "btn btn-outline-danger" })
-            </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Values[item.Values.Count - 2].Value }, new { @class = "btn btn-outline-primary" })
+                    @Html.ActionLink("Details", "Details", new { id = item.Values[item.Values.Count - 2].Value, classID = item.Values[item.Values.Count - 1].Value }, new { @class = "btn btn-outline-info" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Values[item.Values.Count - 2].Value }, new { @class = "btn btn-outline-danger" })
+                </td>
             </tr>
         }
 

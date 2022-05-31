@@ -132,12 +132,15 @@
     <Compile Include="Controllers\clsFileController.cs" />
     <Compile Include="Controllers\clsNewsController.cs" />
     <Compile Include="Controllers\clsPhotoController.cs" />
+    <Compile Include="Controllers\clsContactController.cs" />
     <Compile Include="Controllers\clsUserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\clsBusinessViewModel.cs" />
     <Compile Include="Models\clsFileViewModel.cs" />
+    <Compile Include="Models\clsRowModel.cs" />
+    <Compile Include="Models\clsTableModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -160,7 +163,6 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\ss.css" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -190,6 +192,7 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\Filter_Scripts\Filter.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -223,6 +226,10 @@
     <Content Include="Views\clsUser\Create.cshtml" />
     <Content Include="Views\clsPhoto\Create.cshtml" />
     <Content Include="Views\clsUser\Edit.cshtml" />
+    <Content Include="Views\clsContact\Create.cshtml" />
+    <Content Include="Views\clsContact\Details.cshtml" />
+    <Content Include="Views\clsContact\Edit.cshtml" />
+    <Content Include="Views\clsContact\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

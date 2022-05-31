@@ -13,9 +13,10 @@ namespace FileWorxWebApp.Controllers
         {
             clsFileQuery file = new clsFileQuery();
             var list = await file.run();
+            var table = new clsTableModel(list);
             clsFileViewModel model = new clsFileViewModel();
             model.filter = file.Filter;
-            model.list = list;
+            model.table = table;
             return View(model);
         }
 
@@ -25,9 +26,10 @@ namespace FileWorxWebApp.Controllers
             clsFileQuery file = new clsFileQuery();
             file.Filter = filter;
             var list = await file.run();
+            var table = new clsTableModel(list);
             clsFileViewModel model = new clsFileViewModel();
             model.filter = file.Filter;
-            model.list = list;
+            model.table = table;
             return View(model);
         }
 

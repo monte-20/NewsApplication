@@ -35,7 +35,7 @@ Public Class clsApiManager
             Throw e
         End Try
     End Function
-    Public Async Function UpdateData(apiUrl As String, data As clsBusiness) As Task
+    Public Async Function UpdateData(apiUrl As String, data As Object) As Task
         Try
             Dim body As StringContent = buildBody(data)
             Dim responseBody As HttpResponseMessage = Await client.PutAsync(apiUrl, body)
@@ -46,7 +46,7 @@ Public Class clsApiManager
         End Try
     End Function
 
-    Public Async Function InsertData(apiUrl As String, data As clsBusiness) As Task
+    Public Async Function InsertData(apiUrl As String, data As Object) As Task
         Try
             Dim body As StringContent = buildBody(data)
             Dim responseBody As HttpResponseMessage = Await client.PostAsync(apiUrl, body)

@@ -8,7 +8,7 @@ namespace FileWorxWebApp.Models
 {
     public class clsFileViewModel
     {
-        public clsListView list { get; set; }
+        public clsTableModel table { get; set; }
         public clsFileFilter filter { get; set; }
     }
 }

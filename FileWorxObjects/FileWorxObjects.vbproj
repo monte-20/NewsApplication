@@ -83,7 +83,9 @@
     <Compile Include="Models\clsPhotos.vb" />
     <Compile Include="Models\clsPhotosQuery.vb" />
     <Compile Include="Models\clsShared.vb" />
+    <Compile Include="Models\clsContact.vb" />
     <Compile Include="Models\clsUser.vb" />
+    <Compile Include="Models\clsContactQuery.vb" />
     <Compile Include="Models\clsUserQuery.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

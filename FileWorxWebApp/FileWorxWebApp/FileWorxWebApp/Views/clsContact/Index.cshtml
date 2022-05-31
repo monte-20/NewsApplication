@@ -2,21 +2,25 @@
 @model clsBusinessViewModel
 
 @{
-    ViewBag.Title = "Business";
+    ViewBag.Title = "Contacts";
 }
 
 @section scripts{
-    <script src="~/Scripts/Filter_Scripts/Filter.js" ></script>
+    <script src="~/Scripts/Filter_Scripts/Filter.js"></script>
 }
 
 <br />
 
 <h3>
-    Business
-    <small class="text-muted">-All Business Files-</small>
+    Contacts
 </h3>
 
 <br />
+
+
+<div>
+    @Html.ActionLink("New Contact", "Create", "", new { @class = "btn btn-outline-light" })
+</div>
 
 <div class="accordion" id="accordionExample">
     <div class="accordion-item">
@@ -28,7 +32,7 @@
         <div id="accordionBody" class="accordion-collapse panel" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style=" display:none">
             <div class="accordion-body">
                 <div>
-                    @using (Html.BeginForm("Index", "clsBusiness", FormMethod.Post))
+                    @using (Html.BeginForm("Index", "clsContact", FormMethod.Post))
                     {
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group" onchange="toggleDate()">
                             <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked="">
@@ -58,7 +62,8 @@
                             <div class="col-2 col-md-2">
                                 Title: @Html.EditorFor(model => model.filter.NameFilter)
                             </div>
-                           
+
+
                         </div>
                         <br />
                         <button type="submit" class="btn btn-secondary">Filter</button>
@@ -70,44 +75,44 @@
 </div>
 
 
-
 @if (Model.list.Items.Count <= 0)
 {
     <h4>There is no item here, add one</h4>
 }
 else
 {
-<table class="table table-striped">
-    <caption>Number Of Items: @Model.list.Items.Count</caption>
-    <tr>
-        @for (int i = 0; i <= Model.list.Items[0].Values.Count - 3; i++)
-        {
-
-            <th>
-                @Html.DisplayFor(model => model.list.Items[0].Values[i].Header)
-            </th>
-            <th></th>
-        }
-        <th></th>
-    </tr>
-    @foreach (var item in Model.list.Items)
-    {
+    <table class="table table-striped">
         <tr>
             @for (int i = 0; i <= Model.list.Items[0].Values.Count - 3; i++)
             {
 
-                <td>
-                    @Html.DisplayFor(model => item.Values[i].Value)
-                </td>
-
-                <td></td>
-
+                <th>
+                    @Html.DisplayFor(model => model.list.Items[0].Values[i].Header)
+                </th>
+                <th></th>
             }
-        <td>
-            @Html.ActionLink("Delete", "Delete", new { id = item.Values[item.Values.Count - 2].Value }, new { @class = "btn btn-outline-danger" })
-        </td>
+            <th></th>
         </tr>
-    }
+        @foreach (var item in Model.list.Items)
+        {
+            <tr>
+                @for (int i = 0; i <= Model.list.Items[0].Values.Count - 3; i++)
+                {
 
-</table>
+                    <td>
+                        @Html.DisplayFor(model => item.Values[i].Value)
+                    </td>
+
+                    <td></td>
+
+                }
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Values[item.Values.Count - 2].Value }, new { @class = "btn btn-outline-primary" })
+                    @Html.ActionLink("Details", "Details", new { id = item.Values[item.Values.Count - 2].Value, classID = item.Values[item.Values.Count - 1].Value }, new { @class = "btn btn-outline-info" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Values[item.Values.Count - 2].Value }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
 }

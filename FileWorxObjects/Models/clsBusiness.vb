@@ -8,6 +8,7 @@ Public Class clsBusiness
         USER
         NEWS
         PHOTOS
+        CONTACT
     End Enum
     Protected ReadOnly Property api As New clsApiManager
 
