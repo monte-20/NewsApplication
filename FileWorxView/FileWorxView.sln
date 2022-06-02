@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileWorxWebApp", "..\FileWo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FtpTransfer", "..\FtpTransfer\FtpTransfer.csproj", "{C29C2976-3184-40CD-B272-79176160A02E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FtpReceive", "..\FtpReceive\FtpReceive.csproj", "{EE90A653-85BD-4C08-8827-4CD9042DC07F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C29C2976-3184-40CD-B272-79176160A02E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C29C2976-3184-40CD-B272-79176160A02E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C29C2976-3184-40CD-B272-79176160A02E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE90A653-85BD-4C08-8827-4CD9042DC07F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE90A653-85BD-4C08-8827-4CD9042DC07F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE90A653-85BD-4C08-8827-4CD9042DC07F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE90A653-85BD-4C08-8827-4CD9042DC07F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -201,6 +201,7 @@
     <Compile Include="Models\clsBussiness.vb" />
     <Compile Include="Models\clsBussinessFilter.vb" />
     <Compile Include="Models\clsBussinessQuery.vb" />
+    <Compile Include="Models\clsContactFilter.vb" />
     <Compile Include="Models\clsFile.vb" />
     <Compile Include="Models\clsFileFilter.vb" />
     <Compile Include="Models\clsFileQuery.vb" />

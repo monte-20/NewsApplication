@@ -6,7 +6,7 @@ Imports Newtonsoft.Json
 Public Class clsContactQuery
 
 
-    Public Property Filter() As New clsBusinessFilter
+    Public Property Filter() As New clsContactFilter
     Private ReadOnly Property apiUrl As String = "https://localhost:44321/api/Contact/Contacts"
     Private ReadOnly Property api As New clsApiManager
 

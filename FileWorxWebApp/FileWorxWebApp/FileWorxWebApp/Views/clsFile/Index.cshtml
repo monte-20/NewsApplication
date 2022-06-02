@@ -7,6 +7,7 @@
 
 @section scripts{
     <script src="~/Scripts/Filter_Scripts/Filter.js"></script>
+ 
 }
 
 <br />
@@ -96,53 +97,83 @@
 }
 else
 {
-    using (Html.BeginForm("modal", "clsFile", FormMethod.Post))
+    using (Html.BeginForm("Transfer", "clsFile", FormMethod.Post))
     {
         <table class="table table-striped">
             <caption>Number Of Items: @Model.table.items.Count</caption>
             <tr>
-                @for (int i = 0; i <= Model.table.items[0].item.Values.Count - 3; i++)
-                {
+                <th>
+                   Name
+                </th>
+                
+                <th>
+                    Creation Date
+                </th>
+               
+                <th>
+                    Description
+                </th>
+               
 
-                    <th>
-                        @Html.DisplayFor(model => model.table.items[0].item.Values[i].Header)
-                    </th>
-                    <th></th>
-
-                }
                 <th></th>
                 <th></th>
             </tr>
-            @foreach (var row in Model.table.items)
+            @for (int j=0; j<=Model.table.items.Count-1;j++)
             {
                 <tr>
-                    @for (int i = 0; i <= Model.table.items[0].item.Values.Count - 3; i++)
-                    {
-
-                        <td>
-                            @Html.DisplayFor(model => row.item.Values[i].Value)
-                        </td>
-
-                        <td></td>
-
-                    }
                     <td>
-                        @Html.ActionLink("Details", "Details", new { id = row.item.Values[row.item.Values.Count - 2].Value, classID = row.item.Values[row.item.Values.Count - 1].Value }, new { @class = "btn btn-outline-info" })
-                        @Html.ActionLink("Delete", "Delete", new { id = row.item.Values[row.item.Values.Count - 2].Value, classID = row.item.Values[row.item.Values.Count - 1].Value }, new { @class = "btn btn-outline-danger" })
-
+                        <div  class="form-check">
+                                @Html.DisplayFor(model => model.table.items[j].name)
+                                @Html.HiddenFor(model => model.table.items[j].name)
+                        </div>
                     </td>
+
+                       
+                    <td>
+                        <div  class="form-check">
+                                @Html.DisplayFor(model => model.table.items[j].date)
+                                @Html.HiddenFor(model => model.table.items[j].date)
+                        </div>
+                    </td>
+
+                 
+                    <td>
+                        <div  class="form-check">
+                                @Html.DisplayFor(model => model.table.items[j].descripton)
+                                @Html.HiddenFor(model => model.table.items[j].descripton)
+                        </div>
+                    </td>             
+
+                    <td>
+                        <div  class="form-check">
+                                @Html.HiddenFor(model => model.table.items[j].id)
+                        </div>
+                    </td>
+
+
+                    <td>
+                        <div  class="form-check">
+                                @Html.HiddenFor(model => model.table.items[j].classId)
+                        </div>
+                    </td>
+
+
+                    
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = Model.table.items[j].id, classID = Model.table.items[j].classId }, new { @class = "btn btn-outline-info" })
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.table.items[j].id, classID = Model.table.items[j].classId }, new { @class = "btn btn-outline-danger" })
+
+                </td>
                     <td>
                         <div class="form-check">
-                            @Html.CheckBoxFor(model => row.transfer, new { @class = "form-check-input", @id = "transferCheck" })
-                            <label class="form-check-label" for="transferCheck">
-                                Send
-                            </label>
+                            @Html.CheckBoxFor(model => model.table.items[j].transfer, new { @class = "form-check-input"})
                         </div>
                     </td>
                 </tr>
             }
         </table>
-        <button type="submit" class="btn btn-primary">Transfer Files</button>
-    }
-}
 
+        <button type="submit" class="btn btn-primary" >Transfer Files</button>
+    }
+
+}

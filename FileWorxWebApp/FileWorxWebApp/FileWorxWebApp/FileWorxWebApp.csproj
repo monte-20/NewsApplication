@@ -138,9 +138,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\clsBusinessViewModel.cs" />
+    <Compile Include="Models\clsContactViewModel.cs" />
     <Compile Include="Models\clsFileViewModel.cs" />
+    <Compile Include="Models\clsRowConverter.cs" />
     <Compile Include="Models\clsRowModel.cs" />
+    <Compile Include="Models\clsTableConverter.cs" />
     <Compile Include="Models\clsTableModel.cs" />
+    <Compile Include="Models\clsTranfereViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -230,10 +234,12 @@
     <Content Include="Views\clsContact\Details.cshtml" />
     <Content Include="Views\clsContact\Edit.cshtml" />
     <Content Include="Views\clsContact\Index.cshtml" />
+    <Content Include="Views\clsFile\Transfer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Photos\" />
+    <Folder Include="TempFiles\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -247,6 +253,10 @@
     <ProjectReference Include="..\..\..\FileWorxObjects\FileWorxObjects.vbproj">
       <Project>{077d6216-5a3e-49f8-ae88-d2b2b04d50ee}</Project>
       <Name>FileWorxObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FtpTransfer\FtpTransfer.csproj">
+      <Project>{c29c2976-3184-40cd-b272-79176160a02e}</Project>
+      <Name>FtpTransfer</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

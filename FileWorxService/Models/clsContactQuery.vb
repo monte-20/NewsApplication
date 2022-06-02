@@ -4,7 +4,7 @@ Public Class clsContactQuery
 
 
     Private Property DBManager() As clsDBConnectionManager = New clsDBConnectionManager
-    Public Property Filter() As clsBussinessFilter = New clsBussinessFilter
+    Public Property Filter() As clsContactFilter = New clsContactFilter
 
     Public Function run() As String(,)
 
@@ -36,10 +36,10 @@ Public Class clsContactQuery
         Return data(0, 0)
     End Function
     Private Function BuildQuery() As String
-        Dim query As String = "select T_BUSSINESSOBJECT.ID,T_BUSSINESSOBJECT.C_CREATIONDATE,T_BUSSINESSOBJECT.C_NAME,T_BUSSINESSOBJECT.C_CLASSID,T_CONTACT.C_USERNAME,T_CONTACT.C_PASSWORD"
+        Dim query As String = "select T_BUSSINESSOBJECT.ID,T_BUSSINESSOBJECT.C_CREATIONDATE,T_BUSSINESSOBJECT.C_NAME,T_BUSSINESSOBJECT.C_CLASSID,T_CONTACT.C_USERNAME,T_CONTACT.C_HOST"
         query &= " from T_BUSSINESSOBJECT,T_CONTACT where T_CONTACT.ID=T_BUSSINESSOBJECT.ID "
         If Filter.IsFiltered() Then
-            query &= "and "
+            query &= " and "
             query &= addFilters()
         End If
         Return query
@@ -49,6 +49,10 @@ Public Class clsContactQuery
         Dim FilterAdded As Boolean = False
         If Filter.IsFilteredByName() Then
             filters &= addNameFilter()
+            FilterAdded = True
+        End If
+        If Filter.IsFilteredByHost() Then
+            filters &= addHostFilter()
             FilterAdded = True
         End If
         If Filter.IsFilteredByDate() Then
@@ -61,6 +65,9 @@ Public Class clsContactQuery
     End Function
     Private Function addNameFilter() As String
         Return " CHARINDEX(@C_NAME, C_NAME ) > 0 "
+    End Function
+    Private Function addHostFilter() As String
+        Return " CHARINDEX(@C_HOST, C_HOST ) > 0 "
     End Function
 
     Private Function addDateFilter() As String
@@ -86,6 +93,9 @@ Public Class clsContactQuery
             .CommandText = query
             If Filter.IsFilteredByName() Then
                 .Parameters.AddWithValue("@C_NAME", Filter.NameFilter)
+            End If
+            If Filter.IsFilteredByHost() Then
+                .Parameters.AddWithValue("@C_HOST", Filter.HostFilter)
             End If
             If Filter.IsFilteredByExactDate() Then
                 .Parameters.AddWithValue("@C_CREATIONDATE", Filter.ExactDateFilter)

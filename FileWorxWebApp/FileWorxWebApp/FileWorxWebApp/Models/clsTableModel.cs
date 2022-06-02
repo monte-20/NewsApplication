@@ -10,19 +10,27 @@ namespace FileWorxWebApp.Models
     {
         public clsTableModel(clsListView list)
         {
-            items=convertListView(list);
+            items=GenerateTable(list);
+        }
+        public clsTableModel()
+        {
+            
         }
       public List<clsRowModel> items { get; set; }
 
 
-        private List<clsRowModel> convertListView(clsListView list)
+        public List<clsRowModel> GenerateTable(clsListView list)
         {
             List < clsRowModel > table=new List<clsRowModel>();
             foreach (clsListViewItem item in list.Items)
             {
-                table.Add(new clsRowModel() { item = item , transfer=false});
+                clsRowModel row=new clsRowModel();
+                row.GenerateRow(item);
+                table.Add(row);
             }
             return table;
         }
+
+        
     }
 }

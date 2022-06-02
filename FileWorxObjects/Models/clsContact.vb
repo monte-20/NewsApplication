@@ -7,6 +7,7 @@ Public Class clsContact
     Public Property Username() As String
 
     Public Property Password() As String
+    Public Property Host() As String
 
     Sub New()
         ClassID = BusinessClass.CONTACT
@@ -31,12 +32,13 @@ Public Class clsContact
     Public Async Function Read() As Task
         Dim apiURL = "https://localhost:44321/api/Contact/getContact/" & ID.ToString
         Dim responseBody As String = Await api.ReadData(apiURL)
-        Dim data As clsUser = JsonConvert.DeserializeObject(Of clsUser)(responseBody)
+        Dim data As clsContact = JsonConvert.DeserializeObject(Of clsContact)(responseBody)
         CreationDate = data.CreationDate
         Description = data.Description
         Name = data.Name
         ClassID = data.ClassID
         Username = data.Username
         Password = data.Password
+        Host = data.Host
     End Function
 End Class

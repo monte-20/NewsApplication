@@ -30,8 +30,8 @@ Public Class clsApiManager
             Dim responseBody As String = Await client.GetStringAsync(apiUrl)
             Return responseBody
         Catch e As HttpRequestException
-            Console.WriteLine(Environment.NewLine & "Exception Caught!")
-            Console.WriteLine("Message :{0} ", e.Message)
+            Debug.WriteLine(Environment.NewLine & "Exception Caught!")
+            Debug.WriteLine("Message :{0} ", e.Message)
             Throw e
         End Try
     End Function

@@ -72,6 +72,7 @@
     <Compile Include="Models\clsBusiness.vb" />
     <Compile Include="Models\clsBusinessFilter.vb" />
     <Compile Include="Models\clsBusinessQuery.vb" />
+    <Compile Include="Models\clsContactFilter.vb" />
     <Compile Include="Models\clsFileFilter.vb" />
     <Compile Include="Models\clsFileQuery.vb" />
     <Compile Include="Models\clsListView.vb" />

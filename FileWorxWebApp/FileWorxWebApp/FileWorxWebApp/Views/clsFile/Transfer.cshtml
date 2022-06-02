@@ -1,0 +1,121 @@
+﻿@using FileWorxWebApp.Models
+@model clsTranfereViewModel
+
+@{
+    ViewBag.Title = "Contacts";
+}
+
+@section scripts{
+    <script src="~/Scripts/Filter_Scripts/Filter.js"></script>
+}
+
+<br />
+
+<h3>
+    Contacts
+</h3>
+
+<br />
+
+
+<div>
+    @Html.ActionLink("New Contact", "Create", "", new { @class = "btn btn-outline-light" })
+</div>
+
+
+@if (Model.contactTable.items.Count <= 0)
+{
+    <h4>There is no item here, add one</h4>
+}
+else
+{
+    using (Html.BeginForm("TransferFiles", "clsFile", FormMethod.Post))
+    {
+        <table class="table table-striped">
+            <caption>Number Of Items: @Model.contactTable.items.Count</caption>
+            <tr>
+                <th>
+                    Name
+                </th>
+
+                <th>
+                    Creation Date
+                </th>
+
+                <th>
+                    UserName
+                </th>
+
+
+                <th></th>
+                <th></th>
+            </tr>
+            @for (int i = 0; i <= Model.contactTable.items.Count - 1; i++)
+            {
+                <tr>
+                    <td>
+                        <div class="form-check">
+                            @Html.DisplayFor(model => model.contactTable.items[i].name)
+                            @Html.HiddenFor(model => model.contactTable.items[i].name)
+                        </div>
+                    </td>
+
+
+                    <td>
+                        <div class="form-check">
+                            @Html.DisplayFor(model => model.contactTable.items[i].date)
+                            @Html.HiddenFor(model => model.contactTable.items[i].date)
+                        </div>
+                    </td>
+
+
+                    <td>
+                        <div class="form-check">
+                            @Html.DisplayFor(model => model.contactTable.items[i].descripton)
+                            @Html.HiddenFor(model => model.contactTable.items[i].descripton)
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="form-check">
+                            @Html.HiddenFor(model => model.contactTable.items[i].id)
+                        </div>
+                    </td>
+
+
+                    <td>
+                        <div class="form-check">
+                            @Html.HiddenFor(model => model.contactTable.items[i].classId)
+                        </div>
+                    </td>
+
+
+
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = Model.contactTable.items[i].id, classID = Model.contactTable.items[i].classId }, new { @class = "btn btn-outline-info" })
+                        @Html.ActionLink("Delete", "Delete", new { id = Model.contactTable.items[i].id, classID = Model.contactTable.items[i].classId }, new { @class = "btn btn-outline-danger" })
+
+                    </td>
+                    <td>
+                        <div class="form-check">
+                            @Html.CheckBoxFor(model => model.contactTable.items[i].transfer, new { @class = "form-check-input" })
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+        for (int i = 0; i < Model.filesTable.items.Count; i++)
+        {
+          <div class="form-check">
+            @Html.HiddenFor(model => model.filesTable.items[i].id)
+            @Html.HiddenFor(model => model.filesTable.items[i].classId)
+            @Html.HiddenFor(model => model.filesTable.items[i].name)
+            @Html.HiddenFor(model => model.filesTable.items[i].date)
+            @Html.HiddenFor(model => model.filesTable.items[i].descripton)
+            @Html.HiddenFor(model => model.filesTable.items[i].transfer)
+          </div>
+
+        }
+        <button type="submit" class="btn btn-primary">Confirm Transfer</button>
+    }
+}
