@@ -89,9 +89,7 @@ else
                 <th>
                     @Html.DisplayFor(model => model.list.Items[0].Values[i].Header)
                 </th>
-                <th></th>
             }
-            <th></th>
         </tr>
         @foreach (var item in Model.list.Items)
         {
@@ -99,9 +97,11 @@ else
                 @for (int i = 0; i <= Model.list.Items[0].Values.Count - 3; i++)
                 {
 
-                    <td>
+                <td>
+                    <div class="form-check">
                         @Html.DisplayFor(model => item.Values[i].Value)
-                    </td>
+                        </div>
+                </td>
 
                     <td></td>
 

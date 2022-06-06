@@ -38,25 +38,26 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-7 col-md-3" id="ExactDateDiv">
-                                Exact Date: @Html.EditorFor(model => model.filter.ExactDateFilter, new { htmlAttributes = new { @type = "datetime-local" } })
+                            <div class="col-auto" id="ExactDateDiv">
+                                @Html.Label("Exact Date:", new { htmlAttributes = new { @type = "datetime-local", @for = "ExactDate", @class = "form-label" } })
+                                <br />
+                                @Html.EditorFor(model => model.filter.ExactDateFilter, new { htmlAttributes = new { @type = "datetime-local",@ID="ExactDate", @class = "form-control" } })
                             </div>
-                            <div class="col-7 col-md-3" id="IntervalDateDiv" style=" display:none">
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <p>
-                                            Start Date: @Html.EditorFor(model => model.filter.StartDateFilter, new { htmlAttributes = new { @type = "datetime-local" } })
-                                        </p>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <p>
-                                            End Date: @Html.EditorFor(model => model.filter.EndDateFilter, new { htmlAttributes = new { @type = "datetime-local" } })
-                                        </p>
-                                    </div>
-                                </div>
+                            <div class="col-auto" id="IntervalDateDiv" style=" display:none">
+
+                                @Html.Label("Start Date:", new { htmlAttributes = new { @type = "datetime-local", @for = "StartDate", @class = "form-label" } })
+                                <br/>
+                                @Html.EditorFor(model => model.filter.StartDateFilter, new { htmlAttributes = new { @type = "datetime-local", @id = "StartDate", @class = "form-control" } })
+                                <br />
+                                @Html.Label("End Date:", new { htmlAttributes = new { @type = "datetime-local", @for = "EndDate", @class = "form-label" } })
+                                <br />
+                                @Html.EditorFor(model => model.filter.EndDateFilter, new { htmlAttributes = new { @type = "datetime-local", @id = "EndDate", @class = "form-control" } })
+
                             </div>
-                            <div class="col-2 col-md-2">
-                                Title: @Html.EditorFor(model => model.filter.NameFilter)
+                            <div class="col-auto">
+                                @Html.Label("Title", new { htmlAttributes = new { @type = "datetime-local", @for = "Title", @class = "form-label" } })
+                                <br />
+                                @Html.EditorFor(model => model.filter.NameFilter, new { htmlAttributes = new { @id = "Title", @class = "form-control" } })
                             </div>
                            
                         </div>
@@ -97,7 +98,9 @@ else
             {
 
                 <td>
-                    @Html.DisplayFor(model => item.Values[i].Value)
+                    <div class="form-check">
+                        @Html.DisplayFor(model => item.Values[i].Value)
+                    </div>
                 </td>
 
                 <td></td>

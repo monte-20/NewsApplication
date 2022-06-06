@@ -18,14 +18,10 @@
 <br />
 
 
-<div>
-    @Html.ActionLink("New Contact", "Create", "", new { @class = "btn btn-outline-light" })
-</div>
-
 
 @if (Model.contactTable.items.Count <= 0)
 {
-    <h4>There is no item here, add one</h4>
+    <h4>There is no Contact here, add one</h4>
 }
 else
 {
