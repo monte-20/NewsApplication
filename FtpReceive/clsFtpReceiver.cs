@@ -1,4 +1,4 @@
-﻿using FileWorxService;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +15,7 @@ namespace FtpReceive
     public partial class clsFtpReceiver : ServiceBase
     {
         Timer _timer { get; set; }
-        private int _interval= 30000;
+        private int _interval= 10000;
         public clsFtpReceiver()
         {
             InitializeComponent();
@@ -43,7 +43,7 @@ namespace FtpReceive
             try
             {
                 clsFileUpdater updater=new clsFileUpdater();
-                updater.UpdateFiles();
+                updater.UpdateFiles().Wait();
             }
             finally
             {

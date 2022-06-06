@@ -78,15 +78,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FileWorxService\FileWorxService.vbproj">
-      <Project>{01ea7a71-e4ee-488b-9736-c90cc4aa3c5d}</Project>
-      <Name>FileWorxService</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FileWorxObjects\FileWorxObjects.vbproj">
+      <Project>{077d6216-5a3e-49f8-ae88-d2b2b04d50ee}</Project>
+      <Name>FileWorxObjects</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

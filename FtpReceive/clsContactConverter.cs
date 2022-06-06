@@ -1,4 +1,4 @@
-﻿using FileWorxService;
+﻿using FileWorxObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +9,22 @@ namespace FtpReceive
 {
     internal class clsContactConverter
     {
-        public List<clsContact> ConvertListView(clsListView listView)
+        public async Task<List<clsContact>> ConvertListViewAsync(clsListView listView)
         {
            
             List<clsContact> contactList = new List<clsContact>();
             foreach(var item in listView.Items)
             {
-               contactList.Add(ConvertListViewItem(item));
+               contactList.Add(await ConvertListViewItemAsync(item));
             }
             return contactList;
         }
 
-        public clsContact ConvertListViewItem(clsListViewItem item)
+        public async Task<clsContact> ConvertListViewItemAsync(clsListViewItem item)
         {
             Guid.TryParse(item.Values[item.Values.Count - 2].Value, out Guid id);
             clsContact contact = new clsContact() { ID = id };
-            contact.Read();
+            await contact.Read();
             return contact;
         }
     }

@@ -1,4 +1,4 @@
-﻿using FileWorxService;
+﻿using FileWorxObjects;
 using FluentFTP;
 using System;
 using System.Collections.Generic;
@@ -12,37 +12,37 @@ namespace FtpReceive
     {
         public List<clsContact> contacts { get; set; }
         public clsSharedInfo sharedInfo=new clsSharedInfo();
-        public void UpdateFiles()
+        public async Task UpdateFiles()
         {
             clsContactQuery query = new clsContactQuery();
-            var listView = query.ListLoad();
+             var listView = await query.run();
             clsContactConverter converter = new clsContactConverter();
-            contacts = converter.ConvertListView(listView);
+            contacts = await converter.ConvertListViewAsync(listView);
             foreach(clsContact contact in contacts)
             {
-                GetFiles(contact);
+                await GetFiles(contact);
             }
         }
 
-        private void GetFiles(clsContact contact)
+        private async Task GetFiles(clsContact contact)
         {
             FtpClient client=new FtpClient(contact.Host,21,new System.Net.NetworkCredential(contact.Username,contact.Password));
             client.Connect();
-            updateNews(client);
-            updatePhotos(client);
+            await updateNews(client);
+            await updatePhotos(client);
         }
-        private void updateNews(FtpClient client)
+        private async Task updateNews(FtpClient client)
         {
            
-            client.DownloadDirectory(sharedInfo.newsDirecotry, "/news");
+           await  client.DownloadDirectoryAsync(sharedInfo.newsDirecotry, "/news");
             clsNewsUpdater updater=new clsNewsUpdater();
-            updater.Update();
+           await  updater.UpdateAsync();
         }
-        private void updatePhotos(FtpClient client)
+        private async Task updatePhotos(FtpClient client)
         {
-            client.DownloadDirectory(sharedInfo.photosDirecotry, "/photos");
+            await client.DownloadDirectoryAsync(sharedInfo.photosDirecotry, "/photos");
             clsPhotosUpdater updater=new clsPhotosUpdater();
-            updater.Update();
+           await  updater.UpdateAsync();
         }
 
        

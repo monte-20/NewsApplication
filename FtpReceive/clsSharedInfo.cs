@@ -8,7 +8,7 @@ namespace FtpReceive
 {
     internal class clsSharedInfo
     {
-        public string newsDirecotry { get; } = @"C:\Users\montaser\Documents\FtpFiles\news";
-        public string photosDirecotry { get; } = @"C:\Users\montaser\Documents\FtpFiles\photos";
+        public string newsDirecotry { get; } = @"D:\FtpFiles\news";
+        public string photosDirecotry { get; } = @"D:\FtpFiles\photos";
     }
 }

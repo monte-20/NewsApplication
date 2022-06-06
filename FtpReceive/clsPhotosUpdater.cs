@@ -1,4 +1,4 @@
-﻿using FileWorxService;
+﻿using FileWorxObjects;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,13 +13,18 @@ namespace FtpReceive
     {
         public clsSharedInfo shared = new clsSharedInfo();
 
-        public void Update()
+        public async Task UpdateAsync()
         {
             string[] files = Directory.GetFiles(shared.photosDirecotry, "*.json");
             foreach (string file in files)
             {
-                ClsPhotos photos = JsonConvert.DeserializeObject<ClsPhotos>(file);
-                photos.Update();
+                using (StreamReader reader = new StreamReader(file))
+                {
+                    string data = reader.ReadToEnd();
+                    clsPhotos photos = JsonConvert.DeserializeObject<clsPhotos>(data);
+                    await photos.Update();
+                }
+               
             }
         }
     }
