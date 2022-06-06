@@ -15,17 +15,23 @@ namespace FtpReceive
 
         public async Task UpdateAsync()
         {
-            string[] files = Directory.GetFiles(shared.photosDirecotry, "*.json");
+            string[] files = getAllFiles();
             foreach (string file in files)
             {
                 using (StreamReader reader = new StreamReader(file))
                 {
                     string data = reader.ReadToEnd();
                     clsPhotos photos = JsonConvert.DeserializeObject<clsPhotos>(data);
+                    photos.CanInsert = true;
                     await photos.Update();
                 }
                
             }
+        }
+
+        private string[] getAllFiles()
+        {
+           return Directory.GetFiles(shared.photosDirecotry, "*.json"); 
         }
     }
 }

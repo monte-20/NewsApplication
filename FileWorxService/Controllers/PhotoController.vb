@@ -22,6 +22,7 @@ Namespace Controllers
         ' PUT: api/File/5
         Public Sub PutPhoto(ByVal id As Guid, <FromBody()> ByVal photo As ClsPhotos)
             photo.ID = id
+            photo.CanInsert = False
             photo.Update()
         End Sub
 

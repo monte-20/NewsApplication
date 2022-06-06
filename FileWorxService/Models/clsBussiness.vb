@@ -10,20 +10,20 @@ Public Class clsBussiness
 
     Public Property ID() As Guid = Guid.Empty
 
-    Public Property CreationDate() As Date
+    Public Property CreationDate() As Date = Date.MinValue
+
 
     Public Property Description() As String = String.Empty
 
     Public Property Name() As String
 
-    Public Property CanInsert As Boolean
+    Public Property CanInsert As Boolean = True
 
     Public Property ClassID() As BussinessClass
 
     Public Property DBManager() As clsDBConnectionManager = New clsDBConnectionManager
     Public Overridable Sub Update()
-        If ID.Equals(Guid.Empty) Then
-            CanInsert = True
+        If CanInsert Then
             InsertData()
         Else
             UpdateData()
@@ -50,8 +50,13 @@ Public Class clsBussiness
     End Sub
 
     Private Sub InsertData()
-        ID = Guid.NewGuid
-        CreationDate = Date.Now
+        If Equals(ID, Guid.Empty) Then
+            ID = Guid.NewGuid
+        End If
+        If Equals(CreationDate, Date.MinValue) Then
+            CreationDate = Date.Now
+        End If
+
         Dim query As String = "insert into T_BUSSINESSOBJECT "
         query &= "VALUES (@ID,@C_DESCRIPTION, @C_CREATIONDATE, @C_NAME,@C_ClASSID)"
         Using com As New SqlCommand()

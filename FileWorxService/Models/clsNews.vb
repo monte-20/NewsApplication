@@ -21,7 +21,6 @@ Public Class ClsNews
         MyBase.Update()
         If CanInsert Then
             InsertData()
-            CanInsert = False
         Else
             UpdateData()
         End If

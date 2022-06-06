@@ -13,7 +13,7 @@ Public Class clsContact
         ClassID = BusinessClass.CONTACT
     End Sub
     Public Async Function Update() As Task
-        If ID.Equals(Guid.Empty) Then
+        If CanInsert Then
             Await InsertData()
         Else
             Await UpdateData()

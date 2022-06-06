@@ -31,6 +31,7 @@ Namespace Controllers
         ' PUT: api/User/5
         Public Sub PutUser(ByVal id As Guid, <FromBody()> ByVal user As ClsUser)
             user.ID = id
+            user.CanInsert = False
             user.Update()
         End Sub
 

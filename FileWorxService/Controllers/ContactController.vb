@@ -12,26 +12,28 @@ Namespace Controllers
             With items
                 .Filter = filter
             End With
-            Dim usersData = items.ListLoad
+            Dim contactsData = items.ListLoad
 
-            Return usersData
+            Return contactsData
         End Function
 
         Public Function GetContact(id As Guid) As clsContact
-            Dim item As New clsContact With {.ID = id}
-            item.Read()
-            Return item
+            Dim contact As New clsContact With {.ID = id}
+            contact.Read()
+            Return contact
         End Function
 
         ' POST: api/User
-        Public Sub PostContact(<FromBody()> user As clsContact)
-            user.Update()
+        Public Sub PostContact(<FromBody()> contact As clsContact)
+            contact.Update()
         End Sub
 
         ' PUT: api/User/5
-        Public Sub PutContact(ByVal id As Guid, <FromBody()> ByVal user As clsContact)
-            user.ID = id
-            user.Update()
+        Public Sub PutContact(ByVal id As Guid, <FromBody()> ByVal contact As clsContact)
+            contact.ID = id
+            contact.CanInsert = False
+
+            contact.Update()
         End Sub
 
     End Class

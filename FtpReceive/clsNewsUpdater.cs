@@ -15,16 +15,22 @@ namespace FtpReceive
 
        public async Task UpdateAsync()
         {
-            string[] files = Directory.GetFiles(shared.newsDirecotry,"*.json");
+            string[] files = getAllFiles();
            foreach(string file in files)
             {
                 using (StreamReader reader = new StreamReader(file))
                 {
                     string data = reader.ReadToEnd();
                     clsNews news = JsonConvert.DeserializeObject<clsNews>(data);
+                    news.CanInsert = true;
                     await news.Update();
                 }
             }
+        }
+
+        private string[] getAllFiles()
+        {
+            return Directory.GetFiles(shared.newsDirecotry, "*.json");
         }
     }
 }

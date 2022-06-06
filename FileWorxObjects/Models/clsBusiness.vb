@@ -22,6 +22,9 @@ Public Class clsBusiness
 
     Public Property ClassID() As BusinessClass
 
+    Public Property CanInsert As Boolean = True
+
+
     Public Async Function Delete() As Task
         Dim apiURL = "https://localhost:44321/api/bussiness/DeleteItem?id=" & ID.ToString
         Await api.DeleteData(apiURL)

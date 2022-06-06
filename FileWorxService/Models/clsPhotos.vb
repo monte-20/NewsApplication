@@ -37,7 +37,6 @@ Public Class ClsPhotos
         CopyPhoto()
         If CanInsert Then
             InsertData()
-            CanInsert = False
         Else
             UpdateData()
         End If

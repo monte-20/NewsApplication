@@ -20,6 +20,7 @@ Namespace Controllers
 
         Public Sub PutNews(ByVal id As Guid, <FromBody()> ByVal news As ClsNews)
             news.ID = id
+            news.CanInsert = False
             news.Update()
         End Sub
 

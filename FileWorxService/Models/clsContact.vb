@@ -15,7 +15,6 @@ Public Class clsContact
         MyBase.Update()
         If CanInsert Then
             InsertData()
-            CanInsert = False
         Else
             UpdateData()
         End If
