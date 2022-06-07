@@ -12,7 +12,7 @@
 <br />
 
 <h3>
-    Contacts
+    Transfer To:
 </h3>
 
 <br />
@@ -21,7 +21,9 @@
 
 @if (Model.contactTable.items.Count <= 0)
 {
-    <h4>There is no Contact here, add one</h4>
+    <h4>There is no Contact here</h4>
+    @Html.ActionLink("Add Contact", "Create", "clsContact", new { @class = "btn btn-outline-light" })
+
 }
 else
 {
@@ -39,7 +41,7 @@ else
                 </th>
 
                 <th>
-                    UserName
+                    Username
                 </th>
 
 
@@ -102,14 +104,14 @@ else
         </table>
         for (int i = 0; i < Model.filesTable.items.Count; i++)
         {
-          <div class="form-check">
-            @Html.HiddenFor(model => model.filesTable.items[i].id)
-            @Html.HiddenFor(model => model.filesTable.items[i].classId)
-            @Html.HiddenFor(model => model.filesTable.items[i].name)
-            @Html.HiddenFor(model => model.filesTable.items[i].date)
-            @Html.HiddenFor(model => model.filesTable.items[i].descripton)
-            @Html.HiddenFor(model => model.filesTable.items[i].transfer)
-          </div>
+            <div class="form-check">
+                @Html.HiddenFor(model => model.filesTable.items[i].id)
+                @Html.HiddenFor(model => model.filesTable.items[i].classId)
+                @Html.HiddenFor(model => model.filesTable.items[i].name)
+                @Html.HiddenFor(model => model.filesTable.items[i].date)
+                @Html.HiddenFor(model => model.filesTable.items[i].descripton)
+                @Html.HiddenFor(model => model.filesTable.items[i].transfer)
+            </div>
 
         }
         <button type="submit" class="btn btn-primary">Confirm Transfer</button>

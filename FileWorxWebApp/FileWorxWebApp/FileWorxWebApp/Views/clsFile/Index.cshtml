@@ -20,12 +20,12 @@
 <br />
 
 <div>
-    <p>
+    
         @Html.ActionLink("New News", "Create", "clsNews", "", new { @class = "btn btn-outline-light" })
         or
         @Html.ActionLink("New Photo", "Create", "clsPhoto", "", new { @class = "btn btn-outline-light" })
 
-    </p>
+   
 </div>
 
 
@@ -49,33 +49,29 @@
                         </div>
 
                         <div class="row">
-                            <div class=" col-md-3" id="ExactDateDiv">
-                                Exact Date: @Html.EditorFor(model => model.filter.ExactDateFilter, new { htmlAttributes = new { @type = "datetime-local" } })
+                            <div class=" col-auto" id="ExactDateDiv">
+                                @Html.Label("Exact Date:", new { @for = "ExactDate" })
+                                 <br />
+                                @Html.EditorFor(model => model.filter.ExactDateFilter, new { htmlAttributes = new { @type = "datetime-local", @id = "ExactDate" } })
                             </div>
-                            <div class=" col-md-3" id="IntervalDateDiv" style=" display:none">
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <p>
-                                            Start Date: @Html.EditorFor(model => model.filter.StartDateFilter, new { htmlAttributes = new { @type = "datetime-local" } })
-                                        </p>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <p>
-                                            End Date: @Html.EditorFor(model => model.filter.EndDateFilter, new { htmlAttributes = new { @type = "datetime-local" } })
-                                        </p>
-                                    </div>
-                                </div>
+                            <div class=" col-auto" id="IntervalDateDiv" style=" display:none">
+                                @Html.Label("Start Date:", new { @for = "StartDate" })
+                                <br />
+                                @Html.EditorFor(model => model.filter.StartDateFilter, new { htmlAttributes = new { @type = "datetime-local", @id="StartDate"} })
+                              <br />
+                                @Html.Label("End Date:", new { @for = "EndDate" })
+                                <br />
+                                 @Html.EditorFor(model => model.filter.EndDateFilter, new { htmlAttributes = new { @type = "datetime-local", @id = "EndDate" } })
+
                             </div>
-                            <div class="col-md-3 row-cols-md-1">
-                                <label class="form-check-label" for="Title">
-                                    Title:
-                                </label>
+                            <div class="col-auto">
+                                @Html.Label("Title:", new { @for = "Title" })
+                                <br />
                                 @Html.EditorFor(model => model.filter.NameFilter, new { htmlAttributes = new { @id = "Title", @width = "100%" } })
                             </div>
-                            <div class=" col-md-3 row-cols-md-1">
-                                <label class="form-check-label" for="Body">
-                                    Body:
-                                </label>
+                            <div class=" col-auto">
+                                @Html.Label("Body:",new {@for="Body" })
+                                <br />
                                 @Html.TextAreaFor(model => model.filter.BodyFilter, new { @id = "Body" })
                             </div>
 
@@ -102,15 +98,15 @@ else
         <table class="table table-striped">
             <caption>Number Of Items: @Model.table.items.Count</caption>
             <tr>
-                <th>
+                <th scope="col">
                    Name
                 </th>
                 
-                <th>
+                <th scope="col">
                     Creation Date
-                </th>
+                </th >
                
-                <th>
+                <th scope="col">
                     Description
                 </th>
                
@@ -122,39 +118,38 @@ else
             {
                 <tr>
                     <td>
-                        <div  class="form-check">
+                        
                                 @Html.DisplayFor(model => model.table.items[j].name)
                                 @Html.HiddenFor(model => model.table.items[j].name)
-                        </div>
+                       
                     </td>
 
                        
                     <td>
-                        <div  class="form-check">
+                       
                                 @Html.DisplayFor(model => model.table.items[j].date)
                                 @Html.HiddenFor(model => model.table.items[j].date)
-                        </div>
+                       
                     </td>
 
                  
                     <td>
-                        <div  class="form-check">
                                 @Html.DisplayFor(model => model.table.items[j].descripton)
                                 @Html.HiddenFor(model => model.table.items[j].descripton)
-                        </div>
+                        
                     </td>             
 
                     <td>
-                        <div  class="form-check">
+                       
                                 @Html.HiddenFor(model => model.table.items[j].id)
-                        </div>
+                       
                     </td>
 
 
                     <td>
-                        <div  class="form-check">
+                        
                                 @Html.HiddenFor(model => model.table.items[j].classId)
-                        </div>
+                      
                     </td>
 
 
@@ -165,9 +160,9 @@ else
 
                 </td>
                     <td>
-                        <div class="form-check">
-                            @Html.CheckBoxFor(model => model.table.items[j].transfer, new { @class = "form-check-input"})
-                        </div>
+                       
+                     @Html.CheckBoxFor(model => model.table.items[j].transfer, new { @class = "form-check-input"})
+                        
                     </td>
                 </tr>
             }
